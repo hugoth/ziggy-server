@@ -44,7 +44,7 @@ router.post("/admin/login", async (req, res) => {
   try {
     if (SHA256(password + user.salt).toString(encBase64) === user.hash) {
       const user = { token: user.token, name: user.name };
-      res.json({ message: "Vous êtes bien login", user });
+      res.json({ message: "Vous êtes bien login" }, { user });
     } else {
       res.json({ message: "password incorrect" });
     }
