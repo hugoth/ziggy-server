@@ -15,6 +15,9 @@ mongoose.connect(
 const admin = require("./Routes/admin_routes");
 app.use(admin);
 
+const user = require("./Routes/user_routes");
+app.use(user);
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server started");
 });
