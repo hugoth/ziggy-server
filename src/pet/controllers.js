@@ -11,11 +11,10 @@ async function calculDailyNeed(req, res) {
     const weight = pet.weight;
     const sterilized = pet.sterilized;
     // const purebreed = pet.purebreed;
-    // const gender = pet.purebreed;
+    // const gender = pet.gender;
     const physiology = pet.physiology;
     // const idealweight = pet.idealweight;
     const fitness = pet.fitness;
-    // const hungerlevel = pet.hungerlevel;
     // const healthcare = pet.healthcare;
     // const foodsupply = pet.foodsupply;
     // const allergic = pet.allergic;

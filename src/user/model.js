@@ -1,38 +1,25 @@
 const mongoose = require("mongoose");
 
 const User = mongoose.model("User", {
-  name: {
+  firstName: {
     type: String,
     default: ""
   },
-  mail: {
-    type: String
-  },
-  age: {
-    type: Number
-  },
-  gender: {
-    type: String
-  },
-  picture: {
-    type: String
-  },
-  email: {
-    type: String
-  },
-  phone: {
-    type: String
-  },
-  address: String,
-  hash: {
-    type: String
-  },
-  salt: {
-    type: String
-  },
-  token: {
-    type: String
-  }
+  lastName : String,
+  mail: String,
+  hash: String,
+  salt: String,
+  token: String,
+  age: Number,
+  gender: String,
+  picture: String,
+  email: String,
+  phone: String,
+  deliveryAddress: String,
+  billingAddress = String,
+  pets: Array,
+  subscription : Array,
+  orders : Array
 });
 
 module.exports = User;
