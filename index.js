@@ -18,6 +18,9 @@ app.use(admin);
 const user = require("./src/user/routes");
 app.use(user);
 
+const pet = require("./src/pet/routes");
+app.use(pet);
+
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
 });
