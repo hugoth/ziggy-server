@@ -23,9 +23,7 @@ const User = mongoose.model("User", {
   phone: {
     type: String
   },
-  adress: {
-    type: String
-  },
+  address: String,
   hash: {
     type: String
   },

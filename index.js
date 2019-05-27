@@ -12,10 +12,10 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-const admin = require("./Routes/admin_routes");
+const admin = require("./src/admin/routes");
 app.use(admin);
 
-const user = require("./Routes/user_routes");
+const user = require("./src/user/routes");
 app.use(user);
 
 app.listen(process.env.PORT || 3001, () => {
