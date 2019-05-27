@@ -60,7 +60,10 @@ async function calculDailyNeed(req, res) {
       } else {
         physiologyFactor = 0.85;
       }
-    } else if (species === "chat") {
+    }
+
+    //
+    else if (species === "chat") {
       if (physiology === "Mince") {
         physiologyFactor = 1.15;
       } else if (physiology === "Normal") {
@@ -105,7 +108,7 @@ async function calculDailyNeed(req, res) {
       allergicto,
       specialdiet
     });
-    await newPet.save();
+    // await newPet.save();
 
     const catstheoreticalNeed = weight ** 0.67 * 100;
 
@@ -113,14 +116,13 @@ async function calculDailyNeed(req, res) {
       catstheoreticalNeed * sterilizedFactor * physiologyFactor;
 
     const catsfinalNeed = catsdailyneed.toFixed(2) + " calories par jour";
-    const dogsfinalNeed = dogsdailyneed.toFixed(2) + " calories par jour";
+    const dogsfinalNeed = dogsdailyneed.toFixed(2);
 
-    if (species === "chien") {
-      res.json({ dogsfinalNeed });
-    } else {
-      res.json({ "votre chat a besoin de": catsfinalNeed });
-    }
+    res.json({ dogsfinalNeed });
   } catch (error) {
+    // else {
+    //   res.json({ "votre chat a besoin de": catsfinalNeed });
+    // }
     res.status(400).json({ error: error.message });
     console.log(error);
   }
