@@ -75,15 +75,6 @@ async function calculDailyNeed(req, res) {
       }
     }
 
-    let physiologyFactor = 0;
-    if (physiology === "Mince") {
-      physiologyFactor = 1.15;
-    } else if (physiology === "Normal") {
-      physiologyFactor = 1;
-    } else {
-      physiologyFactor = 0.85;
-    }
-
     const dogstheoreticalNeed = weight ** 0.75 * 130;
 
     const dogsdailyneed =
@@ -94,7 +85,6 @@ async function calculDailyNeed(req, res) {
       sterilizedFactor *
       physiologyFactor;
 
-    const finalNeed = dailyneed.toFixed(2) + " calories par jour";
     const newPet = new Pet({
       name,
       species,
@@ -116,7 +106,6 @@ async function calculDailyNeed(req, res) {
       specialdiet
     });
     await newPet.save();
-    res.json({ finalNeed });
 
     const catstheoreticalNeed = weight ** 0.67 * 100;
 
