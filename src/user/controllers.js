@@ -1,11 +1,12 @@
 const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 const uid2 = require("uid2");
-
-const Users = require("../db/Ziggy-DB.json");
 const mongoose = require("mongoose");
 
+const Users = require("../db/Ziggy-DB.json");
+
 const User = mongoose.model("User");
+const Pet = require("../pet/model");
 
 async function getUsers(req, res) {
   try {
@@ -53,13 +54,18 @@ async function signUp(req, res) {
       const billingAddress = user.billingAddress;
 
       // infos sur l'abonnement de l'user
+      // il faut créer un modèle de order / commande et l'appeler ici avec un New Order en intégrant une ref à l'user
 
-      const subscription = user.subscription;
-      const orders = user.orders;
+      // ==>
+      // const subscription = user.subscription;
+      // const orders = user.orders;
+      // ==>
 
       // infos sur l'animal(aux) de l'user
 
-      const pets = user.pet;
+      const petId = user.pet._id;
+      let newArray = [];
+      newArray.push(petId);
 
       const newUser = new User({
         mail,
@@ -72,13 +78,16 @@ async function signUp(req, res) {
         age,
         deliveryAddress,
         billingAddress,
-        subscription,
-        orders,
-        pets
+        pets: []
+        // subscription,
+        // orders,
       });
 
-      await newUser.save();
-      res.status(200).json({ message: "User signUp", token });
+      // ici il faut modifier l'objet pets pour y intégrer une reférence à l'user
+
+      console.log(newUser);
+      // await newUser.save();
+      res.status(200).json({ message: "User signUp", newUser });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

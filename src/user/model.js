@@ -17,7 +17,7 @@ const User = mongoose.model("User", {
   phone: String,
   deliveryAddress: String,
   billingAddress = String,
-  pets: Array,
+  pets: [{type : mongoose.Schema.Types.ObjectId, ref : "Pet"}],
   subscription : Array,
   orders : Array
 });

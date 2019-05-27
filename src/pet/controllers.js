@@ -3,23 +3,24 @@ const Pet = require("./model");
 async function calculDailyNeed(req, res) {
   const { pet } = req.body;
   try {
-    // const name = pet.name;
+    const name = pet.name;
     const species = pet.species;
     const breedfactor = pet.breedfactor;
-    // const breed = pet.breed;
+    const breed = pet.breed;
+    const secondbreed = pet.secondbreed;
     const age = pet.age;
     const weight = pet.weight;
     const sterilized = pet.sterilized;
-    // const purebreed = pet.purebreed;
-    // const gender = pet.gender;
+    const purebreed = pet.purebreed;
+    const gender = pet.gender;
     const physiology = pet.physiology;
-    // const idealweight = pet.idealweight;
+    const idealweight = pet.idealweight;
     const fitness = pet.fitness;
-    // const healthcare = pet.healthcare;
-    // const foodsupply = pet.foodsupply;
-    // const allergic = pet.allergic;
-    // const allergicto = pet.allergicto;
-    // const specialdiet = pet.specialdiet;
+    const healthcare = pet.healthcare;
+    const foodsupply = pet.foodsupply;
+    const allergic = pet.allergic;
+    const allergicto = pet.allergicto;
+    const specialdiet = pet.specialdiet;
 
     let fitnessFactor = 0;
     if (fitness === "Très peu actif(ve), un peu feignant(e) !") {
@@ -64,11 +65,6 @@ async function calculDailyNeed(req, res) {
     }
 
     const theoreticalNeed = weight ** 0.75 * 130;
-    console.log(theoreticalNeed);
-    console.log(fitnessFactor);
-    console.log(ageFactor);
-    console.log(sterilizedFactor);
-    console.log(physiologyFactor);
 
     const dailyneed =
       theoreticalNeed *
@@ -79,8 +75,28 @@ async function calculDailyNeed(req, res) {
       physiologyFactor;
 
     const finalNeed = dailyneed.toFixed(2) + " calories par jour";
-
-    res.json({ "votre chien a besoin de": finalNeed });
+    const newPet = new Pet({
+      name,
+      species,
+      breedfactor,
+      breed,
+      age,
+      weight,
+      sterilized,
+      purebreed,
+      secondbreed,
+      gender,
+      physiology,
+      idealweight,
+      fitness,
+      healthcare,
+      foodsupply,
+      allergic,
+      allergicto,
+      specialdiet
+    });
+    await newPet.save();
+    res.json({ finalNeed });
   } catch (error) {
     res.status(400).json({ error: error.message });
     console.log(error);
