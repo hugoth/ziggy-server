@@ -19,7 +19,9 @@ const Subscription = mongoose.model("Subscription", {
     },
     billing: {
       type: Null,
-      price: EUD
+      device: EUD,
+      adresse: String,
+      price: Number
     }
   }
 });
