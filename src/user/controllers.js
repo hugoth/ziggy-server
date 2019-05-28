@@ -43,42 +43,28 @@ async function logIn(req, res) {
 }
 
 async function signUp(req, res) {
-  const { user } = req.body;
-  const mail = user.mail;
+  const mail = req.body.user.mail;
   const existingUser = await User.findOne({ mail: mail });
   if (existingUser) {
     res.json({ message: "User with this mail already registered" });
   } else {
     try {
-      // infos authentification sur l'user
-      const mail = user.mail;
-      const password = req.body.password;
+      const {
+        password,
+        firstName,
+        lastName,
+        phone,
+        age,
+        deliveryAddress,
+        billingAddress,
+        pets
+        // subscription,
+        // orders,
+      } = req.body.user;
+
       const token = uid2(16);
       const salt = uid2(16);
       const hash = SHA256(password + salt).toString(encBase64);
-
-      // infos perso sur l'user
-      const firstName = user.firstName;
-      const lastName = user.lastName;
-      const phone = user.phone;
-      const age = user.age;
-
-      // infos de facturation sur l'user
-
-      const deliveryAddress = user.deliveryAddress;
-      const billingAddress = user.billingAddress;
-
-      // infos sur l'abonnement de l'user
-      // il faut créer un modèle de order / commande et l'appeler ici avec un New Order en intégrant une ref à l'user
-
-      // ==>
-      // const subscription = user.subscription;
-      // const orders = user.orders;
-      // ==>
-
-      // infos sur l'animal(aux) de l'user
-
-      const pets = user.pets;
 
       const newUser = new User({
         mail,

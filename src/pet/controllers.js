@@ -1,27 +1,28 @@
 const Pet = require("./model");
 
-async function calculDailyNeed(req, res) {
-  const { pet } = req.body;
-  try {
-    const name = pet.name;
-    const species = pet.species;
-    const breedfactor = pet.breedfactor;
-    const breed = pet.breed;
-    const secondbreed = pet.secondbreed;
-    const age = pet.age;
-    const weight = pet.weight;
-    const sterilized = pet.sterilized;
-    const purebreed = pet.purebreed;
-    const gender = pet.gender;
-    const physiology = pet.physiology;
-    const idealweight = pet.idealweight;
-    const fitness = pet.fitness;
-    const healthcare = pet.healthcare;
-    const foodsupply = pet.foodsupply;
-    const allergic = pet.allergic;
-    const allergicto = pet.allergicto;
-    const specialdiet = pet.specialdiet;
+async function calculDailyNeeds(req, res) {
+  const {
+    name,
+    species,
+    breedfactor,
+    breed,
+    secondbreed,
+    age,
+    weight,
+    sterilized,
+    purebreed,
+    gender,
+    physiology,
+    idealweight,
+    fitness,
+    healthcare,
+    foodsupply,
+    allergic,
+    allergicto,
+    specialdiet
+  } = req.body.pet;
 
+  try {
     let fitnessFactor = 0;
     let ageFactor = 0;
     let sterilizedFactor = 0;
@@ -37,15 +38,15 @@ async function calculDailyNeed(req, res) {
       } else if (age > 96) {
         ageFactor = 0.9;
       }
-      if (fitness === "Très peu actif(ve), un peu feignant(e) !") {
+      if (fitness === 1) {
         fitnessFactor = 0.7;
-      } else if (fitness === "Plutôt calme, peu actif(ve)") {
+      } else if (fitness === 2) {
         fitnessFactor = 0.8;
-      } else if (fitness === "Normalement actif(ve)") {
+      } else if (fitness === 3) {
         fitnessFactor = 0.9;
-      } else if (fitness === "Très actif(ve)") {
+      } else if (fitness === 4) {
         fitnessFactor = 1;
-      } else if (fitness === "Une boule d'énergie !") {
+      } else if (fitness === 5) {
         fitnessFactor = 1.1;
       }
       if (sterilized === true) {
@@ -53,22 +54,22 @@ async function calculDailyNeed(req, res) {
       } else {
         sterilizedFactor = 1;
       }
-      if (physiology === "Mince") {
+      if (physiology === 1) {
         physiologyFactor = 1.15;
-      } else if (physiology === "Normal") {
+      } else if (physiology === 2) {
         physiologyFactor = 1;
-      } else {
+      } else if (physiology === 3) {
         physiologyFactor = 0.85;
       }
     }
 
     //
     else if (species === "chat") {
-      if (physiology === "Mince") {
+      if (physiology === 1) {
         physiologyFactor = 1.15;
-      } else if (physiology === "Normal") {
+      } else if (physiology === 2) {
         physiologyFactor = 1;
-      } else {
+      } else if (physiology === 3) {
         physiologyFactor = 0.85;
       }
       if (sterilized === true) {
@@ -79,6 +80,7 @@ async function calculDailyNeed(req, res) {
     }
 
     const dogTheoreticalNeeds = weight ** 0.75 * 130;
+    const catTheoreticalNeeds = weight ** 0.67 * 100;
 
     const dogDailyNeeds =
       dogTheoreticalNeeds *
@@ -87,6 +89,9 @@ async function calculDailyNeed(req, res) {
       ageFactor *
       sterilizedFactor *
       physiologyFactor;
+
+    const catDailyNeeds =
+      catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
     const newPet = new Pet({
       name,
@@ -110,11 +115,6 @@ async function calculDailyNeed(req, res) {
     });
     // await newPet.save();
 
-    const catTheoreticalNeeds = weight ** 0.67 * 100;
-
-    const catDailyNeeds =
-      catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
-
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
 
@@ -129,4 +129,4 @@ async function calculDailyNeed(req, res) {
   }
 }
 
-module.exports.calculDailyNeed = calculDailyNeed;
+module.exports.calculDailyNeeds = calculDailyNeeds;
