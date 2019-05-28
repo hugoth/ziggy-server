@@ -49,7 +49,7 @@ async function calculDailyNeeds(req, res) {
       } else if (fitness == 5) {
         fitnessFactor = 1.1;
       }
-      if (sterilized === "true") {
+      if (sterilized === true) {
         sterilizedFactor = 0.8;
       } else {
         sterilizedFactor = 1;
