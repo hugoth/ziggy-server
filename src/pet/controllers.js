@@ -38,38 +38,38 @@ async function calculDailyNeeds(req, res) {
       } else if (age > 96) {
         ageFactor = 0.9;
       }
-      if (fitness === 1) {
+      if (fitness == 1) {
         fitnessFactor = 0.7;
-      } else if (fitness === 2) {
+      } else if (fitness == 2) {
         fitnessFactor = 0.8;
-      } else if (fitness === 3) {
+      } else if (fitness == 3) {
         fitnessFactor = 0.9;
-      } else if (fitness === 4) {
+      } else if (fitness == 4) {
         fitnessFactor = 1;
-      } else if (fitness === 5) {
+      } else if (fitness == 5) {
         fitnessFactor = 1.1;
       }
-      if (sterilized === true) {
+      if (sterilized === "true") {
         sterilizedFactor = 0.8;
       } else {
         sterilizedFactor = 1;
       }
-      if (physiology === 1) {
+      if (physiology == 1) {
         physiologyFactor = 1.15;
-      } else if (physiology === 2) {
+      } else if (physiology == 2) {
         physiologyFactor = 1;
-      } else if (physiology === 3) {
+      } else if (physiology == 3) {
         physiologyFactor = 0.85;
       }
     }
 
     //
     else if (species === "chat") {
-      if (physiology === 1) {
+      if (physiology == 1) {
         physiologyFactor = 1.15;
-      } else if (physiology === 2) {
+      } else if (physiology == 2) {
         physiologyFactor = 1;
-      } else if (physiology === 3) {
+      } else if (physiology == 3) {
         physiologyFactor = 0.85;
       }
       if (sterilized === true) {
