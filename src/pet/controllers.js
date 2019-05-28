@@ -34,7 +34,7 @@ async function calculDailyNeed(req, res) {
         ageFactor = 1.6;
       } else if (age > 9 && age <= 96) {
         ageFactor = 1.25;
-      } else if (age < 96) {
+      } else if (age > 96) {
         ageFactor = 0.9;
       }
       if (fitness === "Très peu actif(ve), un peu feignant(e) !") {
@@ -118,11 +118,12 @@ async function calculDailyNeed(req, res) {
     const catsfinalNeed = catsdailyneed.toFixed(2) + " calories par jour";
     const dogsfinalNeed = dogsdailyneed.toFixed(2);
 
-    res.json({ dogsfinalNeed });
+    if (species === "chien") {
+      res.json({ dogsfinalNeed });
+    } else {
+      res.json({ "votre chat a besoin de": catsfinalNeed });
+    }
   } catch (error) {
-    // else {
-    //   res.json({ "votre chat a besoin de": catsfinalNeed });
-    // }
     res.status(400).json({ error: error.message });
     console.log(error);
   }
