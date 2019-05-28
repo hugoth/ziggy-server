@@ -78,10 +78,10 @@ async function calculDailyNeed(req, res) {
       }
     }
 
-    const dogstheoreticalNeed = weight ** 0.75 * 130;
+    const dogTheoreticalNeeds = weight ** 0.75 * 130;
 
-    const dogsdailyneed =
-      dogstheoreticalNeed *
+    const dogDailyNeeds =
+      dogTheoreticalNeeds *
       breedfactor *
       fitnessFactor *
       ageFactor *
@@ -110,18 +110,18 @@ async function calculDailyNeed(req, res) {
     });
     // await newPet.save();
 
-    const catstheoreticalNeed = weight ** 0.67 * 100;
+    const catTheoreticalNeeds = weight ** 0.67 * 100;
 
-    const catsdailyneed =
-      catstheoreticalNeed * sterilizedFactor * physiologyFactor;
+    const catDailyNeeds =
+      catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
-    const catsfinalNeed = catsdailyneed.toFixed(2) + " calories par jour";
-    const dogsfinalNeed = dogsdailyneed.toFixed(2);
+    const catFinalNeeds = catDailyNeeds.toFixed(2);
+    const dogFinalNeeds = dogDailyNeeds.toFixed(2);
 
     if (species === "chien") {
-      res.json({ dogsfinalNeed });
-    } else {
-      res.json({ "votre chat a besoin de": catsfinalNeed });
+      res.json({ dogFinalNeeds });
+    } else if (species === "chat") {
+      res.json({ catFinalNeeds });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

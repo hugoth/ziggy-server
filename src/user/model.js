@@ -5,7 +5,7 @@ const User = mongoose.model("User", {
     type: String,
     default: ""
   },
-  lastName : String,
+  lastName: String,
   mail: String,
   hash: String,
   salt: String,
@@ -16,10 +16,10 @@ const User = mongoose.model("User", {
   email: String,
   phone: String,
   deliveryAddress: String,
-  billingAddress = String,
-  pets: [{type : mongoose.Schema.Types.ObjectId, ref : "Pet"}],
-  subscription : Array,
-  orders : Array
+  billingAddress: String,
+  pets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
+  subscription: Array,
+  orders: Array
 });
 
 module.exports = User;

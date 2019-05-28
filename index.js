@@ -12,6 +12,10 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
+require("./src/pet/model");
+require("./src/user/model");
+require("./src/admin/model");
+
 const admin = require("./src/admin/routes");
 app.use(admin);
 

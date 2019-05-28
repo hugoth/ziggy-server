@@ -1,27 +1,42 @@
 const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 const uid2 = require("uid2");
-const mongoose = require("mongoose");
 
 const Users = require("../db/Ziggy-DB.json");
-
-const User = mongoose.model("User");
-const Pet = require("../pet/model");
+const User = require("./model");
 
 async function getUsers(req, res) {
   try {
-    res.json(Users);
+    const users = await User.find();
+    res.json(users);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 }
 
 async function logIn(req, res) {
+  const searchUser = await User.findOne({ mail: req.body.mail });
+
+  if (!searchUser) {
+    res.json({ message: "user with this mail not found" });
+  }
+
+  const user = {
+    name: searchUser.name,
+    mail: searchUser.mail,
+    token: searchUser.token,
+    pets: searchUser.pets
+  };
+  const password = req.body.password;
+
   try {
-    const id = req.params.id;
-    //   const user = Users.findById(id);
-    // require Mongoose, not possible whith local DB
-    res.json(Users[0]);
+    if (
+      SHA256(password + searchUser.salt).toString(encBase64) === searchUser.hash
+    ) {
+      res.json({ message: "Vous êtes bien login", user });
+    } else {
+      res.json({ message: "password incorrect" });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -63,9 +78,7 @@ async function signUp(req, res) {
 
       // infos sur l'animal(aux) de l'user
 
-      const petId = user.pet._id;
-      let newArray = [];
-      newArray.push(petId);
+      const pets = user.pets;
 
       const newUser = new User({
         mail,
@@ -78,16 +91,15 @@ async function signUp(req, res) {
         age,
         deliveryAddress,
         billingAddress,
-        pets: []
+        pets
         // subscription,
         // orders,
       });
 
-      // ici il faut modifier l'objet pets pour y intégrer une reférence à l'user
-
+      await newUser.save();
       console.log(newUser);
-      // await newUser.save();
-      res.status(200).json({ message: "User signUp", newUser });
+
+      res.status(200).json({ message: "User sign up !", token });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
