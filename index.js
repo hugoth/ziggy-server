@@ -1,30 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require('express')
+const { setUpMiddlewares } = require('./src/services/middlewares')
+const { connect } = require('./src/services/database')
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+const app = express()
+connect()
+setUpMiddlewares(app)
 
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/ziggy-server",
-  { useNewUrlParser: true }
-);
-
-require("./src/pet/model");
-require("./src/user/model");
-require("./src/admin/model");
-
-const admin = require("./src/admin/routes");
-app.use(admin);
-
-const user = require("./src/user/routes");
-app.use(user);
-
-const pet = require("./src/pet/routes");
-app.use(pet);
+// - This is your main route /api => call all others routes
+app.use('/api', require('./src/api'))
 
 app.listen(process.env.PORT || 3001, () => {
-  console.log("Server started");
-});
+  console.log('Server started')
+})
