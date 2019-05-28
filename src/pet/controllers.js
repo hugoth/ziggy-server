@@ -118,8 +118,9 @@ async function calculDailyNeeds(req, res) {
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
 
+    const { pet } = req.body;
     if (species === "chien") {
-      res.json({ dogFinalNeeds });
+      res.json({ dogFinalNeeds, pet });
     } else if (species === "chat") {
       res.json({ catFinalNeeds });
     }
