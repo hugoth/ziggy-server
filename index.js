@@ -15,15 +15,19 @@ mongoose.connect(
 require("./src/pet/model");
 require("./src/user/model");
 require("./src/admin/model");
+require("./src/meals/model");
 
-const admin = require("./src/admin/routes");
-app.use(admin);
+const admins = require("./src/admin/routes");
+app.use(admins);
 
-const user = require("./src/user/routes");
-app.use(user);
+const users = require("./src/user/routes");
+app.use(users);
 
-const pet = require("./src/pet/routes");
-app.use(pet);
+const pets = require("./src/pet/routes");
+app.use(pets);
+
+const meals = require("./src/meals/routes");
+app.use(meals);
 
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
