@@ -47,7 +47,7 @@ async function getMeals(req, res) {
 
 async function removeMeal(req, res) {
   try {
-    const meal = await Meals.findById(req.body.id);
+    const meal = await Meal.findById(req.body.id);
     if (meal !== null) {
       if (meal.quantity >= req.body.quantity) {
         meal.quantity = meal.quantity - req.body.quantity;
@@ -66,7 +66,7 @@ async function removeMeal(req, res) {
 
 async function addMeal(req, res) {
   try {
-    const meal = await Meals.findById(req.body.id);
+    const meal = await Meal.findById(req.body.id);
     if (meal !== null) {
       meal.quantity = meal.quantity + req.body.quantity;
       await meal.save();
@@ -79,7 +79,23 @@ async function addMeal(req, res) {
   }
 }
 
+async function deleteMeal(req, res) {
+  try {
+    const meal = await Meal.findById(req.body.id);
+    if (meal !== null) {
+      await meal.remove();
+
+      res.status(200).json("Meal deleted");
+    } else {
+      res.json({ error: { message: "Bad request" } });
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports.createMeal = createMeal;
 module.exports.getMeals = getMeals;
 module.exports.removeMeal = removeMeal;
 module.exports.addMeal = addMeal;
+module.exports.deleteMeal = deleteMeal;

@@ -6,6 +6,7 @@ router.post("/meals/create", controller.createMeal);
 router.get("/meals", controller.getMeals);
 router.post("/meals/remove", controller.removeMeal);
 router.post("/meals/add", controller.addMeal);
+router.post("/meals/delete", controller.deleteMeal);
 // router.post("/meals/update", controller.update);
 
 module.exports = router;
