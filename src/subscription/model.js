@@ -21,7 +21,8 @@ const Subscription = mongoose.model("Subscription", {
       type: Null,
       device: EUD,
       adresse: String,
-      price: Number
+      price: Number,
+      phone: Number
     }
   }
 });
