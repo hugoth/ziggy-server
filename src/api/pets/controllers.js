@@ -6,20 +6,20 @@ async function calculDailyNeeds(req, res) {
     species,
     breedfactor,
     breed,
-    secondbreed,
     age,
     weight,
     sterilized,
     purebreed,
     gender,
     physiology,
-    idealweight,
     fitness,
     healthcare,
     foodsupply,
     allergic,
-    allergicto,
-    specialdiet
+    appetite,
+    eatCandies,
+    candyType,
+    owner
   } = req.body.pet;
 
   try {
@@ -102,16 +102,16 @@ async function calculDailyNeeds(req, res) {
       weight,
       sterilized,
       purebreed,
-      secondbreed,
       gender,
       physiology,
-      idealweight,
       fitness,
       healthcare,
       foodsupply,
       allergic,
-      allergicto,
-      specialdiet
+      appetite,
+      eatCandies,
+      candyType,
+      owner
     });
     // await newPet.save();
 

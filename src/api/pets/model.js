@@ -12,16 +12,12 @@ const Pet = mongoose.model("Pet", {
   weight: Number,
   sterilized: Boolean,
   purebred: Boolean,
-  secondebreed: String,
   gender: String,
   physiology: String,
-  idealweight: Number,
   fitness: String,
   healthcare: Boolean,
   foodsupply: String,
-  allergic: Boolean,
-  allergicto: String,
-  specialdiet: Boolean
+  allergic: String
 });
 
 module.exports = Pet;
