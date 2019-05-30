@@ -5,7 +5,7 @@ const Pet = mongoose.model("Pet", {
     type: String,
     default: ""
   },
-  spacies: String,
+  species: String,
   breedfactor: Number,
   breed: String,
   age: Number,

@@ -21,6 +21,9 @@ app.use(user);
 const pet = require("./src/pet/routes");
 app.use(pet);
 
+const stripe = require("./src/stripe/routes");
+app.use(stripe);
+
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
 });
