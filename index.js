@@ -1,32 +1,29 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const { setUpMiddlewares } = require("./src/services/middlewares");
+const { connect } = require("./src/services/database");
 
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+connect();
+setUpMiddlewares(app);
 
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/ziggy-server",
-  { useNewUrlParser: true }
-);
+// - This is your main route /api => call all others routes
+app.use("/api", require("./src/api"));
 
-require("./src/pet/model");
-require("./src/user/model");
-require("./src/admin/model");
-require("./src/meals/model");
+require("./src/api/pets/model");
+require("./src/api/users/model");
+require("./src/api/admins/model");
+require("./src/api/meals/model");
 
-const admins = require("./src/admin/routes");
+const admins = require("./src/api/admins/routes");
 app.use(admins);
 
-const users = require("./src/user/routes");
+const users = require("./src/api/users/routes");
 app.use(users);
 
-const pets = require("./src/pet/routes");
+const pets = require("./src/api/pets/routes");
 app.use(pets);
 
-const meals = require("./src/meals/routes");
+const meals = require("./src/api/meals/routes");
 app.use(meals);
 
 app.listen(process.env.PORT || 3001, () => {
