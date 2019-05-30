@@ -1,0 +1,49 @@
+[
+  [
+    {
+      "species": "chien",
+      "title": "Boeuf",
+      "Description": "Des petits morceaux de boeufs hachés avec des légumes de saisons bio",
+      "PricePerBag": 2.9,
+      "CaloriesperBag": 309
+    },
+    {
+      "species": "chien",
+      "title": "Poulet",
+      "Description": "Des petits morceaux de poulet hachés avec des légumes de saisons bio",
+      "PricePerBag": 2.9,
+      "CaloriesperBag": 290
+    },
+    {
+      "species": "chien",
+      "title": "Poissons",
+      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "PricePerBag": 2.9,
+      "CaloriesperBag": 305
+    }
+  ],
+
+  [
+    {
+      "species": "chat",
+      "title": "Boeuf",
+      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "PricePerBag": 1.5,
+      "CaloriesperBag": 190
+    },
+    {
+      "species": "chat",
+      "title": "Poulet",
+      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "PricePerBag": 1.5,
+      "CaloriesperBag": 201
+    },
+    {
+      "species": "chat",
+      "title": "Poissons",
+      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "PricePerBag": 1.5,
+      "CaloriesperBag": 205
+    }
+  ]
+]

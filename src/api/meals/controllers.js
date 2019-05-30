@@ -1,4 +1,5 @@
 const Meal = require("./model");
+const fakemeals = require("../db/db.json");
 
 async function createMeal(req, res) {
   try {
@@ -37,12 +38,13 @@ async function createMeal(req, res) {
 }
 
 async function getMeals(req, res) {
-  try {
-    const meals = await Meal.find();
-    res.status(200).json(meals);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+  // try {
+  //   const meals = await Meal.find();
+  //   res.status(200).json(meals);
+  // } catch (error) {
+  //   res.status(400).json({ error: error.message });
+  // }
+  res.json(fakemeals);
 }
 
 async function removeMeal(req, res) {
