@@ -2,13 +2,21 @@ const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 const uid2 = require("uid2");
 
-const Users = require("../db/Ziggy-DB.json");
 const User = require("./model");
 
 async function getUsers(req, res) {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("Pet");
     res.json(users);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function getUser(req, res) {
+  try {
+    const user = await User.findOne({ id: req.query.id }).populate("pets");
+    res.json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -93,5 +101,6 @@ async function signUp(req, res) {
 }
 
 module.exports.getUsers = getUsers;
+module.exports.getUser = getUser;
 module.exports.logIn = logIn;
 module.exports.signUp = signUp;
