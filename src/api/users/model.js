@@ -10,16 +10,14 @@ const User = mongoose.model("User", {
   hash: String,
   salt: String,
   token: String,
-  age: Number,
   gender: String,
   picture: String,
-  email: String,
+  mail: String,
   phone: String,
   deliveryAddress: String,
   billingAddress: String,
   pets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
-  subscription: Array,
-  orders: Array
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }]
 });
 
 module.exports = User;

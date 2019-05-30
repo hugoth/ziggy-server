@@ -72,7 +72,7 @@ async function addMeal(req, res) {
     if (meal !== null) {
       meal.quantity = meal.quantity + req.body.quantity;
       await meal.save();
-      res.status(200).json("Quantity modified");
+      res.status(200).json(meal);
     } else {
       res.json({ error: { message: "Bad request" } });
     }

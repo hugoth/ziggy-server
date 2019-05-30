@@ -13,6 +13,7 @@ require("./src/api/pets/model");
 require("./src/api/users/model");
 require("./src/api/admins/model");
 require("./src/api/meals/model");
+require("./src/api/orders/model");
 
 const admins = require("./src/api/admins/routes");
 app.use(admins);

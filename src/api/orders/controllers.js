@@ -1,8 +1,12 @@
 const Order = require("./model");
+const User = require("../users/model");
+const Meal = require("../meals/model");
 
 async function getOrders(req, res) {
   try {
-    const orders = Order.find().populate("User");
+    const orders = await Order.find()
+      .populate("meal")
+      .populate("user");
     res.json(orders);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -10,24 +14,46 @@ async function getOrders(req, res) {
 }
 
 async function createOrder(req, res) {
-  const user = req.body.id;
   try {
-    const searchUser = User.findById(req.body.id);
+    const searchUser = await User.findById(req.body.user);
+    const searchMeal = await Meal.findById(req.body.meal);
     if (!searchUser) {
       res.status(401).json("Login as user needed");
+    } else if (searchMeal.quantity < req.body.quantity) {
+      res.status(402).json("Out of Stock");
     } else {
-      const { type, species, quantity, price, description, date } = req.body;
-      const newOrder = new Order({
-        type,
-        species,
+      const {
         quantity,
         price,
         description,
         date,
-        user
+        frequency,
+        isSubscription
+      } = req.body;
+      const meal = req.body.meal;
+      const user = req.body.user;
+      const totalPrice = price * quantity;
+      const newOrder = new Order({
+        meal,
+        user,
+        quantity,
+        totalPrice,
+        frequency,
+        isSubscription,
+        description,
+        date
       });
+      console.log(searchUser, searchMeal);
+      // mettre à jour les stocks
+      searchMeal.quantity = searchMeal.quantity - quantity;
+      await searchMeal.save();
 
-      res.status(200).json({ newOrder });
+      await newOrder.save();
+      // Sauvegarder l'order dans l'user (après le save de NewOrder pour récupérer l'ID)
+      searchUser.orders.push(newOrder._id);
+      await searchUser.save();
+
+      res.status(200).json({ message: "order completed", newOrder });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

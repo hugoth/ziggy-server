@@ -6,7 +6,15 @@ const User = require("./model");
 
 async function getUsers(req, res) {
   try {
-    const users = await User.find().populate("Pet");
+    const users = await User.find()
+      .populate("pets")
+      .populate({
+        path: "orders",
+        populate: {
+          path: "meal"
+        }
+      });
+
     res.json(users);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -15,7 +23,15 @@ async function getUsers(req, res) {
 
 async function getUser(req, res) {
   try {
-    const user = await User.findOne({ id: req.query.id }).populate("pets");
+    const user = await User.findOne({ id: req.query.id })
+      .populate("pets")
+      .populate({
+        path: "orders",
+        populate: {
+          path: "meal"
+        }
+      });
+
     res.json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -62,7 +78,6 @@ async function signUp(req, res) {
         firstName,
         lastName,
         phone,
-        age,
         deliveryAddress,
         billingAddress,
         pets
@@ -82,7 +97,6 @@ async function signUp(req, res) {
         firstName,
         lastName,
         phone,
-        age,
         deliveryAddress,
         billingAddress,
         pets

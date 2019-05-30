@@ -17,7 +17,10 @@ const Pet = mongoose.model("Pet", {
   fitness: String,
   healthcare: Boolean,
   foodsupply: String,
-  allergic: String
+  allergic: String,
+  appetite: String,
+  eatCandies: String,
+  owner: Object
 });
 
 module.exports = Pet;
