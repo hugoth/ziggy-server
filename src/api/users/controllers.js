@@ -23,7 +23,7 @@ async function getUsers(req, res) {
 
 async function getUser(req, res) {
   try {
-    const user = await User.findOne({ id: req.query.id })
+    const user = await User.findById(req.params.id)
       .populate("pets")
       .populate({
         path: "orders",

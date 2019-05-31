@@ -13,6 +13,56 @@ async function getOrders(req, res) {
   }
 }
 
+async function getOrder(req, res) {
+  try {
+    const order = await Order.findById(req.params.id)
+      .populate("meal")
+      .populate("user");
+    res.json(order);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function getSubscriptions(req, res) {
+  try {
+    const orders = await Order.find({ isSubscription: true })
+      .populate("meal")
+      .populate("user");
+    res.json(orders);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function getUniqueOrders(req, res) {
+  try {
+    const orders = await Order.find({ isSubscription: false })
+      .populate("meal")
+      .populate("user");
+    res.json(orders);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function getSpecies(req, res) {
+  const pet = req.params.pets;
+  console.log(pet);
+  try {
+    const orders = await Order.find()
+      .populate("meal")
+      .populate("user");
+    ordersPets = orders.filter(order => {
+      return order.meal.species === pet;
+    });
+
+    res.json(ordersPets);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 async function createOrder(req, res) {
   try {
     const searchUser = await User.findById(req.body.user);
@@ -61,4 +111,8 @@ async function createOrder(req, res) {
 }
 
 module.exports.getOrders = getOrders;
+module.exports.getOrder = getOrder;
+module.exports.getSubscriptions = getSubscriptions;
 module.exports.createOrder = createOrder;
+module.exports.getUniqueOrders = getUniqueOrders;
+module.exports.getSpecies = getSpecies;
