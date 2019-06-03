@@ -134,14 +134,14 @@ async function signUp(req, res) {
       });
       await newUser.save();
 
-      const clientUser = {
+      const user = {
         firstName: newUser.firstName,
         id: newUser._id,
         token: newUser.token,
         date: newUser.date
       };
 
-      res.status(200).json({ message: "User sign up !", clientUser });
+      res.status(200).json({ message: "User sign up !", user });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

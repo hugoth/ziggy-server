@@ -20,6 +20,22 @@ async function getOrders(req, res) {
   }
 }
 
+async function searchOrders(req, res) {
+  const name = req.params.name;
+  console.log(name);
+  try {
+    const orders = await Order.find()
+      .populate("user")
+      .populate({
+        path: "meal",
+        match: { title: { $eq: name } }
+      });
+    res.json(orders);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 async function getOrder(req, res) {
   try {
     const order = await Order.findById(req.params.id)
@@ -124,3 +140,4 @@ module.exports.getSubscriptions = getSubscriptions;
 module.exports.createOrder = createOrder;
 module.exports.getUniqueOrders = getUniqueOrders;
 module.exports.getSpecies = getSpecies;
+module.exports.searchOrders = searchOrders;
