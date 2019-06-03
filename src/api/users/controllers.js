@@ -4,6 +4,36 @@ const uid2 = require("uid2");
 
 const User = require("./model");
 
+async function searchUser(req, res) {
+  const name = req.params.name;
+  const newString = name.split("");
+
+  for (i = 0; i < newString.length; i++) {
+    if (newString[i] === " ") {
+      newString.splice(i, 1);
+    }
+  }
+  const finalString = newString.join("");
+  console.log(finalString);
+
+  try {
+    const users = await User.find({
+      $lastName: { $search: finalString }
+    })
+      .populate("pets")
+      .populate({
+        path: "orders",
+        populate: {
+          path: "meal"
+        }
+      });
+
+    res.json(users);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 async function getUsers(req, res) {
   try {
     const users = await User.find()
@@ -103,17 +133,22 @@ async function signUp(req, res) {
         // subscription,
         // orders,
       });
-
       await newUser.save();
-      console.log(newUser);
 
-      res.status(200).json({ message: "User sign up !", token });
+      const clientUser = {
+        firstName: newUser.firstName,
+        id: newUser._id,
+        token: newUser.token
+      };
+
+      res.status(200).json({ message: "User sign up !", clientUser });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   }
 }
 
+module.exports.searchUser = searchUser;
 module.exports.getUsers = getUsers;
 module.exports.getUser = getUser;
 module.exports.logIn = logIn;

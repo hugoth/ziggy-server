@@ -17,8 +17,7 @@ const User = mongoose.model("User", {
   deliveryAddress: String,
   billingAddress: String,
   pets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
-  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
-  owner: String
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }]
 });
 
 module.exports = User;
