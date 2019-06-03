@@ -1,6 +1,7 @@
 const Pet = require("./model");
 
 async function calculDailyNeeds(req, res) {
+  console.log(req.body.pet);
   const {
     name,
     species,
