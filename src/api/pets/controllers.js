@@ -113,7 +113,7 @@ async function calculDailyNeeds(req, res) {
       candyType,
       owner
     });
-    // await newPet.save();
+    await newPet.save();
 
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
@@ -130,7 +130,7 @@ async function calculDailyNeeds(req, res) {
   }
 }
 
-async function getPets(req, res) {
+async function getSpecies(req, res) {
   try {
     const pets = await Pet.find({ species: req.params.species });
     res.status(200).json(pets);
@@ -139,5 +139,15 @@ async function getPets(req, res) {
   }
 }
 
+async function getPets(req, res) {
+  try {
+    const pets = await Pet.find();
+    res.status(200).json(pets);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports.calculDailyNeeds = calculDailyNeeds;
+module.exports.getSpecies = getSpecies;
 module.exports.getPets = getPets;
