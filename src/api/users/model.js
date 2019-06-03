@@ -1,25 +1,6 @@
 const mongoose = require("mongoose");
+const userSchema = require("./Schema");
 
-const User = mongoose.model("User", {
-  firstName: { type: String, index: true },
-  lastName: { type: String, index: true },
-  mail: String,
-  hash: String,
-  salt: String,
-  token: String,
-  gender: String,
-  picture: String,
-  mail: String,
-  phone: String,
-  deliveryAddress: Object,
-  billingAddress: Object,
-  pets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
-  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }]
-});
-
-User.createIndexes({
-  firstName: "text",
-  lastName: "text"
-});
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

@@ -4,22 +4,20 @@ const uid2 = require("uid2");
 
 const User = require("./model");
 
+let today = new Date();
+const mm = String(today.getDate()).padStart(2, "0");
+const dd = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+const yyyy = today.getFullYear();
+
+today = mm + "/" + dd + "/" + yyyy;
+
 async function searchUser(req, res) {
   const name = req.params.name;
-  const newString = name.split("");
-
-  for (i = 0; i < newString.length; i++) {
-    if (newString[i] === " ") {
-      newString.splice(i, 1);
-    }
-  }
-  const finalString = newString.join("");
-  console.log(finalString);
 
   try {
     const users = await User.find({
       $text: {
-        $search: finalString
+        $search: name
       }
     })
       .populate("pets")
@@ -78,10 +76,11 @@ async function logIn(req, res) {
   }
 
   const user = {
-    name: searchUser.name,
+    firstName: searchUser.firstName,
     mail: searchUser.mail,
     token: searchUser.token,
-    pets: searchUser.pets
+    pets: searchUser.pets,
+    id: searchUser._id
   };
   const password = req.body.password;
 
@@ -118,6 +117,7 @@ async function signUp(req, res) {
       const token = uid2(16);
       const salt = uid2(16);
       const hash = SHA256(password + salt).toString(encBase64);
+      const date = today;
 
       const newUser = new User({
         mail,
@@ -129,14 +129,16 @@ async function signUp(req, res) {
         phone,
         deliveryAddress,
         billingAddress,
-        pets
+        pets,
+        date
       });
       await newUser.save();
 
       const clientUser = {
         firstName: newUser.firstName,
         id: newUser._id,
-        token: newUser.token
+        token: newUser.token,
+        date: newUser.date
       };
 
       res.status(200).json({ message: "User sign up !", clientUser });

@@ -2,6 +2,13 @@ const Order = require("./model");
 const User = require("../users/model");
 const Meal = require("../meals/model");
 
+let today = new Date();
+const mm = String(today.getDate()).padStart(2, "0");
+const dd = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+const yyyy = today.getFullYear();
+
+today = mm + "/" + dd + "/" + yyyy;
+
 async function getOrders(req, res) {
   try {
     const orders = await Order.find()
@@ -76,13 +83,14 @@ async function createOrder(req, res) {
         quantity,
         price,
         description,
-        date,
         frequency,
         isSubscription
       } = req.body;
       const meal = req.body.meal;
       const user = req.body.user;
       const totalPrice = price * quantity;
+      const date = today;
+
       const newOrder = new Order({
         meal,
         user,
