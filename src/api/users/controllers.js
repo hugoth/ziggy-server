@@ -18,7 +18,9 @@ async function searchUser(req, res) {
 
   try {
     const users = await User.find({
-      $lastName: { $search: finalString }
+      $text: {
+        $search: finalString
+      }
     })
       .populate("pets")
       .populate({
@@ -111,8 +113,6 @@ async function signUp(req, res) {
         deliveryAddress,
         billingAddress,
         pets
-        // subscription,
-        // orders,
       } = req.body.user;
 
       const token = uid2(16);
@@ -130,8 +130,6 @@ async function signUp(req, res) {
         deliveryAddress,
         billingAddress,
         pets
-        // subscription,
-        // orders,
       });
       await newUser.save();
 
