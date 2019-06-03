@@ -18,8 +18,8 @@ async function calculDailyNeeds(req, res) {
     foodsupply,
     allergic,
     appetite,
-    eatCandies,
-    candyType,
+    eatcandies,
+    candytype,
     owner
   } = req.body.pet;
 
@@ -110,8 +110,8 @@ async function calculDailyNeeds(req, res) {
       foodsupply,
       allergic,
       appetite,
-      eatCandies,
-      candyType,
+      eatcandies,
+      candytype,
       owner
     });
     await newPet.save();

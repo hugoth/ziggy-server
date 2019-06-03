@@ -15,11 +15,11 @@ const Pet = mongoose.model("Pet", {
   gender: String,
   physiology: String,
   fitness: String,
-  healthcare: Boolean,
+  healthcare: String,
   foodsupply: String,
   allergic: String,
   appetite: String,
-  eatCandies: String,
+  eatcandies: String,
   owner: Object
 });
 
