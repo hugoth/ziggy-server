@@ -119,11 +119,10 @@ async function calculDailyNeeds(req, res) {
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
 
-    const { pet } = req.body;
     if (species === "chien") {
-      res.json({ dogFinalNeeds, pet });
+      res.json({ dogFinalNeeds, newPet });
     } else if (species === "chat") {
-      res.json({ catFinalNeeds });
+      res.json({ catFinalNeeds, newPet });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
