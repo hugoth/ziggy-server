@@ -8,5 +8,6 @@ router.get("/user/:id", controller.getUser);
 router.post("/users/signup", controller.signUp);
 router.post("/users/login", controller.logIn);
 router.get("/users/search/:name", controller.searchUser);
+router.post("/user/update", controller.updateUser);
 
 module.exports = router;

@@ -161,8 +161,57 @@ async function signUp(req, res) {
   }
 }
 
+async function updateUser(req, res) {
+  const id = req.body.user.id;
+  const existingUser = await User.findOne({ _id: id });
+  if (!existingUser) {
+    res.json({ message: "User not found" });
+  } else {
+    try {
+      const {
+        password,
+        firstName,
+        lastName,
+        phone,
+        deliveryAddress,
+        billingAddress,
+        pets
+      } = req.body.user;
+
+      const token = uid2(16);
+      const salt = uid2(16);
+      const hash = SHA256(password + salt).toString(encBase64);
+
+      const existingUser = {
+        token,
+        salt,
+        hash,
+        firstName,
+        lastName,
+        phone,
+        deliveryAddress,
+        billingAddress,
+        pets
+      };
+
+      await existingUser.save();
+
+      const user = {
+        firstName: newUser.firstName,
+        id: newUser._id,
+        token: newUser.token
+      };
+
+      res.status(200).json({ message: "User update", user });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+}
+
 module.exports.searchUser = searchUser;
 module.exports.getUsers = getUsers;
 module.exports.getUser = getUser;
 module.exports.logIn = logIn;
 module.exports.signUp = signUp;
+module.exports.updateUser = updateUser;
