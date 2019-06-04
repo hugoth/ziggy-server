@@ -14,6 +14,7 @@ require("./src/api/users/model");
 require("./src/api/admins/model");
 require("./src/api/meals/model");
 require("./src/api/orders/model");
+require("./src/api/stripe/server");
 
 const admins = require("./src/api/admins/routes");
 app.use(admins);
@@ -30,7 +31,7 @@ app.use(meals);
 const orders = require("./src/api/orders/routes");
 app.use(orders);
 
-const stripe = require("./src/stripe/routes");
+const stripe = require("./src/api/stripe/routes");
 app.use(stripe);
 
 app.listen(process.env.PORT || 3001, () => {
