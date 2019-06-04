@@ -71,7 +71,8 @@ async function getUser(req, res) {
       pets: user.pets,
       token: user.token,
       id: user._id,
-      phone: user.phone
+      phone: user.phone,
+      deliveryAddress: user.deliveryAddress
     };
 
     res.json(selectedUser);
