@@ -122,8 +122,6 @@ async function calculDailyNeeds(req, res) {
 
     if (searchUser) {
       searchUser.pets.push(newPet._id);
-    } else {
-      res.status(402).json("User not found");
     }
     await searchUser.save();
 
