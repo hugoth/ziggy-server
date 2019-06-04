@@ -96,8 +96,6 @@ async function calculDailyNeeds(req, res) {
     const catDailyNeeds =
       catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
-    const searchUser = await User.findById(userID);
-    console.log(searchUser);
     const newPet = new Pet({
       name,
       species,
@@ -120,9 +118,13 @@ async function calculDailyNeeds(req, res) {
     });
     await newPet.save();
 
-    if (searchUser) {
-      searchUser.pets.push(newPet._id);
-      await searchUser.save();
+    if (userID) {
+      const searchUser = await User.findById(userID);
+      if (searchUser) {
+        console.log(searchUser);
+        searchUser.pets.push(newPet._id);
+        await searchUser.save();
+      }
     }
 
     const catFinalNeeds = catDailyNeeds.toFixed(2);
