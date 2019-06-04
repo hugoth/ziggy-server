@@ -119,8 +119,11 @@ async function calculDailyNeeds(req, res) {
       owner
     });
     await newPet.save();
+
     if (searchUser) {
       searchUser.pets.push(newPet._id);
+    } else {
+      res.status(402).json("User not found");
     }
     await searchUser.save();
 
@@ -134,7 +137,6 @@ async function calculDailyNeeds(req, res) {
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
-    console.log(error);
   }
 }
 
