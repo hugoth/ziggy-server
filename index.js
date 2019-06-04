@@ -34,6 +34,9 @@ app.use(orders);
 const stripe = require("./src/api/stripe/routes");
 app.use(stripe);
 
+const stripe = require("./src/stripe/routes");
+app.use(stripe);
+
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
 });
