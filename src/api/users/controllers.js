@@ -182,17 +182,10 @@ async function updateUser(req, res) {
       // const salt = uid2(16);
       // const hash = SHA256(password + salt).toString(encBase64);
 
-      const existingUser = {
-        // token,
-        // salt,
-        // hash,
-        firstName,
-        lastName,
-        phone,
-        deliveryAddress,
-        billingAddress,
-        pets
-      };
+      existingUser = req.body.user;
+      // token,
+      // salt,
+      // hash,
 
       await existingUser.save();
 
