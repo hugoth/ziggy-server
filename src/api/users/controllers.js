@@ -81,10 +81,10 @@ async function getUser(req, res) {
 }
 
 async function logIn(req, res) {
-  const searchUser = await User.findOne({ mail: req.body.mail });
+  const searchUser = await User.findOne({ mail: req.body.user.mail });
 
   if (!searchUser) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "User not found" });
   }
 
   const user = {
@@ -94,7 +94,7 @@ async function logIn(req, res) {
     pets: searchUser.pets,
     id: searchUser._id
   };
-  const password = req.body.password;
+  const password = req.body.user.password;
 
   try {
     if (
