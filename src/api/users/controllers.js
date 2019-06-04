@@ -84,7 +84,7 @@ async function logIn(req, res) {
   const searchUser = await User.findOne({ mail: req.body.mail });
 
   if (!searchUser) {
-    res.json({ message: "user with this mail not found" });
+    res.status(400).json({ error: error.message });
   }
 
   const user = {
@@ -100,9 +100,9 @@ async function logIn(req, res) {
     if (
       SHA256(password + searchUser.salt).toString(encBase64) === searchUser.hash
     ) {
-      res.json({ message: "Vous êtes bien login", user });
+      res.status(200).json({ message: "Vous êtes bien login", user });
     } else {
-      res.json({ message: "password incorrect" });
+      res.status(401).json({ message: "password incorrect" });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
