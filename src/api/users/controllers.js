@@ -169,7 +169,7 @@ async function updateUser(req, res) {
   } else {
     try {
       const {
-        password,
+        // password,
         firstName,
         lastName,
         phone,
@@ -178,14 +178,14 @@ async function updateUser(req, res) {
         pets
       } = req.body.user;
 
-      const token = uid2(16);
-      const salt = uid2(16);
-      const hash = SHA256(password + salt).toString(encBase64);
+      // const token = uid2(16);
+      // const salt = uid2(16);
+      // const hash = SHA256(password + salt).toString(encBase64);
 
       const existingUser = {
-        token,
-        salt,
-        hash,
+        // token,
+        // salt,
+        // hash,
         firstName,
         lastName,
         phone,
