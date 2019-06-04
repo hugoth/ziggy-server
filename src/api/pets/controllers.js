@@ -1,4 +1,5 @@
 const Pet = require("./model");
+const User = require("../users/model");
 
 async function calculDailyNeeds(req, res) {
   console.log(req.body.pet);
@@ -20,7 +21,8 @@ async function calculDailyNeeds(req, res) {
     appetite,
     eatcandies,
     candytype,
-    owner
+    owner,
+    userID
   } = req.body.pet;
 
   try {
@@ -94,6 +96,8 @@ async function calculDailyNeeds(req, res) {
     const catDailyNeeds =
       catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
+    const searchUser = await User.findByID(userID);
+
     const newPet = new Pet({
       name,
       species,
@@ -115,6 +119,10 @@ async function calculDailyNeeds(req, res) {
       owner
     });
     await newPet.save();
+    if (searchUser) {
+      searchUser.pets.push(newPet._id);
+    }
+    await searchUser.save();
 
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
