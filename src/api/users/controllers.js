@@ -62,7 +62,19 @@ async function getUser(req, res) {
         }
       });
 
-    res.json(user);
+    const selectedUser = {
+      date: user.date,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      mail: user.mail,
+      orders: user.orders,
+      pets: user.pets,
+      token: user.token,
+      id: user._id,
+      phone: user.phone
+    };
+
+    res.json(selectedUser);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
