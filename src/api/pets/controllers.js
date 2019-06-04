@@ -96,8 +96,8 @@ async function calculDailyNeeds(req, res) {
     const catDailyNeeds =
       catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
-    const searchUser = await User.findByID(userID);
-
+    const searchUser = await User.findById(userID);
+    console.log(searchUser);
     const newPet = new Pet({
       name,
       species,
