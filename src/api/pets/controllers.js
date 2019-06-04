@@ -122,8 +122,8 @@ async function calculDailyNeeds(req, res) {
 
     if (searchUser) {
       searchUser.pets.push(newPet._id);
+      await searchUser.save();
     }
-    await searchUser.save();
 
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
