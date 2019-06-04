@@ -163,21 +163,11 @@ async function signUp(req, res) {
 
 async function updateUser(req, res) {
   const id = req.body.user.id;
-  const existingUser = await User.findOne({ _id: id });
+  let existingUser = await User.findOne({ _id: id });
   if (!existingUser) {
     res.json({ message: "User not found" });
   } else {
     try {
-      const {
-        // password,
-        firstName,
-        lastName,
-        phone,
-        deliveryAddress,
-        billingAddress,
-        pets
-      } = req.body.user;
-
       // const token = uid2(16);
       // const salt = uid2(16);
       // const hash = SHA256(password + salt).toString(encBase64);
