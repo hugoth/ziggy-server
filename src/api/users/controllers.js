@@ -187,13 +187,13 @@ async function updateUser(req, res) {
 
       await user.save();
 
-      const sendUser = {
-        firstName: existingUser.firstName,
-        id: existingUser._id,
-        token: existingUser.token
+      const newUser = {
+        firstName: user.firstName,
+        id: user._id,
+        token: user.token
       };
 
-      res.status(200).json({ message: "User update", sendUser });
+      res.status(200).json({ message: "User update", newUser });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
