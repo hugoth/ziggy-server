@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   mail: String,
   phone: String,
   deliveryAddress: Object,
-  billingAddress: Object,
+  differentBilling: Boolean,
   date: {
     type: String,
     default: today

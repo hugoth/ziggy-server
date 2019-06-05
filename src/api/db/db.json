@@ -5,27 +5,30 @@
       "title": "Boeuf",
       "id": 1,
       "quantity": 50,
-      "Description": "Des petits morceaux de boeufs hachés avec des légumes de saisons bio",
-      "PricePerBag": 2.9,
-      "CaloriesperBag": 309
+      "description": "Des petits morceaux de boeufs hachés avec des légumes de saisons bio",
+      "pricePerBag": 2.9,
+      "caloriesPerBag": 309,
+      "weight": 300
     },
     {
       "species": "chien",
       "title": "Poulet",
       "id": 2,
       "quantity": 70,
-      "Description": "Des petits morceaux de poulet hachés avec des légumes de saisons bio",
-      "PricePerBag": 2.9,
-      "CaloriesperBag": 290
+      "description": "Des petits morceaux de poulet hachés avec des légumes de saisons bio",
+      "pricePerBag": 2.9,
+      "caloriesPerBag": 290,
+      "weight": 300
     },
     {
       "species": "chien",
       "title": "Poisson",
       "id": 3,
       "quantity": 90,
-      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
-      "PricePerBag": 2.9,
-      "CaloriesperBag": 305
+      "description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "pricePerBag": 2.9,
+      "caloriesPerBag": 305,
+      "weight": 300
     }
   ],
   [
@@ -34,27 +37,30 @@
       "title": "Boeuf",
       "id": 4,
       "quantity": 30,
-      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
-      "PricePerBag": 1.5,
-      "CaloriesperBag": 190
+      "description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "pricePerBag": 1.5,
+      "caloriesPerBag": 190,
+      "weight": 150
     },
     {
       "species": "chat",
       "title": "Poulet",
       "id": 5,
       "quantity": 120,
-      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
-      "PricePerBag": 1.5,
-      "CaloriesperBag": 201
+      "description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "pricePerBag": 1.5,
+      "caloriesPerBag": 201,
+      "weight": 150
     },
     {
       "species": "chat",
       "title": "Poisson",
       "id": 6,
       "quantity": 130,
-      "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
-      "PricePerBag": 1.5,
-      "CaloriesperBag": 205
+      "description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
+      "pricePerBag": 1.5,
+      "caloriesPerBag": 205,
+      "weight": 150
     }
   ]
 ]

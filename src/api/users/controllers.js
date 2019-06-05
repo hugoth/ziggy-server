@@ -123,7 +123,7 @@ async function signUp(req, res) {
         lastName,
         phone,
         deliveryAddress,
-        billingAddress,
+        differentBilling,
         pets
       } = req.body.user;
 
@@ -141,7 +141,7 @@ async function signUp(req, res) {
         lastName,
         phone,
         deliveryAddress,
-        billingAddress,
+        differentBilling,
         pets,
         date
       });
