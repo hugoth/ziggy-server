@@ -14,7 +14,7 @@ require("./src/api/users/model");
 require("./src/api/admins/model");
 require("./src/api/meals/model");
 require("./src/api/orders/model");
-require("./src/api/stripe/server");
+require("./src/api/stripe/routes");
 
 const admins = require("./src/api/admins/routes");
 app.use(admins);
