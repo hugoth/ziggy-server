@@ -13,7 +13,7 @@ router.post("/payment", async (req, res) => {
   // toujours utile?
   try {
     let { status } = await stripe.charges.create({
-      amount: req.body.amount,
+      amount: 3000,
       currency: "eur",
       description: "An example payment",
       source: req.body
