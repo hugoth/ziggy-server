@@ -163,7 +163,7 @@ async function signUp(req, res) {
 
 async function updateUser(req, res) {
   const id = req.body.user.id;
-  let existingUser = await User.findOne({ _id: id });
+  let user = await User.findOne({ _id: id });
   console.log(existingUser);
   if (!existingUser) {
     res.json({ message: "User not found" });
@@ -172,23 +172,28 @@ async function updateUser(req, res) {
       // const token = uid2(16);
       // const salt = uid2(16);
       // const hash = SHA256(password + salt).toString(encBase64);
-
-      existingUser.firstName = req.body.user.firstName;
-      existingUser.lastName = req.body.user.lastName;
+      user.mail = req.body.user.mail;
+      user.firstName = req.body.user.firstName;
+      user.lastName = req.body.user.lastName;
+      user.phone = req.body.user.phone;
+      user.deliveryAddress = req.body.user.deliveryAddress;
+      user.billingAddress = req.body.user.billingAddress;
+      user.pets = req.body.user.pets;
+      user.date = req.body.user.date;
 
       // token,
       // salt,
       // hash,
 
-      await existingUser.save();
+      await user.save();
 
-      const user = {
+      const sendUser = {
         firstName: existingUser.firstName,
         id: existingUser._id,
         token: existingUser.token
       };
 
-      res.status(200).json({ message: "User update", user });
+      res.status(200).json({ message: "User update", sendUser });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
