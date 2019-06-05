@@ -165,7 +165,7 @@ async function updateUser(req, res) {
   const id = req.body.user.id;
   let user = await User.findOne({ _id: id });
   console.log(user);
-  if (user) {
+  if (!user) {
     res.json({ message: "User not found" });
   } else {
     try {

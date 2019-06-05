@@ -21,6 +21,7 @@
     "species": "chien",
     "title": "Poisson",
     "id": 3,
+    "quantity": 90,
     "Description": "Des poissons issus de la pêche intensive et qui cause la mort des baleines et des dauphins",
     "PricePerBag": 2.9,
     "CaloriesperBag": 305
