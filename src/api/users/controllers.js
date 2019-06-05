@@ -164,8 +164,8 @@ async function signUp(req, res) {
 async function updateUser(req, res) {
   const id = req.body.user.id;
   let user = await User.findOne({ _id: id });
-  console.log(existingUser);
-  if (!existingUser) {
+  console.log(user);
+  if (user) {
     res.json({ message: "User not found" });
   } else {
     try {
