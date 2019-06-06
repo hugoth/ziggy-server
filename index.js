@@ -1,6 +1,8 @@
 const express = require("express");
 const { setUpMiddlewares } = require("./src/services/middlewares");
 const { connect } = require("./src/services/database");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const app = express();
 connect();
@@ -8,6 +10,8 @@ setUpMiddlewares(app);
 
 // - This is your main route /api => call all others routes
 app.use("/api", require("./src/api"));
+app.use(cors());
+app.use(bodyParser.json());
 
 require("./src/api/pets/model");
 require("./src/api/users/model");
