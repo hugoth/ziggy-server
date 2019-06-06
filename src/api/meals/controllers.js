@@ -6,27 +6,23 @@ async function createMeal(req, res) {
     const {
       title,
       species,
-      picture,
       quantity,
       weight,
-      calories,
+      caloriesPerBag,
       ingredients,
       description,
-      price,
-      files
+      pricePerBag
     } = req.body.meal;
 
     const newMeal = new Meal({
       title,
       species,
-      picture,
       quantity,
       weight,
-      calories,
+      caloriesPerBag,
       ingredients,
       description,
-      price,
-      files
+      pricePerBag
     });
 
     await newMeal.save();
@@ -66,7 +62,7 @@ async function removeMeal(req, res) {
   }
 }
 
-async function addMeal(req, res) {
+async function updateMeal(req, res) {
   try {
     const meal = await Meal.findById(req.body.id);
     if (meal !== null) {
@@ -99,5 +95,5 @@ async function deleteMeal(req, res) {
 module.exports.createMeal = createMeal;
 module.exports.getMeals = getMeals;
 module.exports.removeMeal = removeMeal;
-module.exports.addMeal = addMeal;
+module.exports.updateMeal = updateMeal;
 module.exports.deleteMeal = deleteMeal;

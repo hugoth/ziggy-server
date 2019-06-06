@@ -30,6 +30,7 @@ async function searchOrders(req, res) {
         path: "meal",
         match: { title: { $eq: name } }
       });
+    console.log(orders);
     res.json(orders);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -105,7 +106,7 @@ async function createOrder(req, res) {
       const meal = req.body.meal;
       const user = req.body.user;
       const totalPrice = price * quantity;
-      const date = today;
+      // const date = today;
 
       const newOrder = new Order({
         meal,
@@ -114,8 +115,8 @@ async function createOrder(req, res) {
         totalPrice,
         frequency,
         isSubscription,
-        description,
-        date
+        description
+        // date
       });
       console.log(searchUser, searchMeal);
       // mettre à jour les stocks
