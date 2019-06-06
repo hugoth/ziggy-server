@@ -9,7 +9,6 @@ router.use(require("body-parser").text());
 router.post("/payment", async (req, res) => {
   console.log("yeah");
   console.log("req :", req.body);
-
   // toujours utile?
   try {
     let { status } = await stripe.charges.create({
