@@ -20,7 +20,8 @@ const Pet = mongoose.model("Pet", {
   allergic: String,
   appetite: String,
   eatcandies: String,
-  owner: Object
+  owner: Object,
+  dailyNeeds: Number
 });
 
 module.exports = Pet;
