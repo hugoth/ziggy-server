@@ -1,7 +1,6 @@
-const MealDog = require("./models/modeldog");
-const MealCat = require("./models/modelcat");
+const Meal = require("./model");
 
-async function createMealDog(req, res) {
+async function createMeal(req, res) {
   try {
     const {
       title,
@@ -14,7 +13,7 @@ async function createMealDog(req, res) {
       pricePerBag
     } = req.body.meal;
 
-    const newMeal = new MealDog({
+    const newMeal = new Meal({
       title,
       species,
       quantity,
@@ -32,49 +31,9 @@ async function createMealDog(req, res) {
   }
 }
 
-async function createMealCat(req, res) {
-  try {
-    const {
-      title,
-      species,
-      quantity,
-      weight,
-      caloriesPerBag,
-      ingredients,
-      description,
-      pricePerBag
-    } = req.body.meal;
-
-    const newMeal = new MealCat({
-      title,
-      species,
-      quantity,
-      weight,
-      caloriesPerBag,
-      ingredients,
-      description,
-      pricePerBag
-    });
-    await newMeal.save();
-    res.status(200).json({ message: "Meal created", newMeal });
-  } catch (error) {
-    res.status(402).json({ error: error.message });
-    console.log(error);
-  }
-}
-
-async function getMealsDog(req, res) {
+async function getMeals(req, res) {
   try {
     const meals = await MealDog.find();
-    res.status(200).json(meals);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-}
-
-async function getMealsCat(req, res) {
-  try {
-    const meals = await MealCat.find();
     res.status(200).json(meals);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -130,10 +89,8 @@ async function deleteMeal(req, res) {
   }
 }
 
-module.exports.createMealDog = createMealDog;
-module.exports.createMealCat = createMealCat;
-module.exports.getMealsDog = getMealsDog;
-module.exports.getMealsCat = getMealsCat;
+module.exports.createMeal = createMeal;
+module.exports.getMeals = getMeals;
 module.exports.removeMeal = removeMeal;
 module.exports.updateMeal = updateMeal;
 module.exports.deleteMeal = deleteMeal;

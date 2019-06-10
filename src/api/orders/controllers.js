@@ -1,7 +1,6 @@
 const Order = require("./model");
 const User = require("../users/model");
-const MealCat = require("../meals/models/modelcat");
-const MealDog = require("../meals/models/modeldog");
+const Meal = require("../meals/model");
 
 let today = new Date();
 const mm = String(today.getDate()).padStart(2, "0");
@@ -13,8 +12,7 @@ today = mm + "/" + dd + "/" + yyyy;
 async function getOrders(req, res) {
   try {
     const orders = await Order.find()
-      .populate("mealcat")
-      .populate("mealdog")
+      .populate("meal")
       .populate("user");
     res.json(orders);
   } catch (error) {
@@ -24,19 +22,13 @@ async function getOrders(req, res) {
 
 async function searchOrders(req, res) {
   const name = req.params.name;
-  console.log(name);
   try {
     const orders = await Order.find()
       .populate("user")
       .populate({
-        path: "mealdog",
-        match: { title: { $eq: name } }
-      })
-      .populate({
-        path: "mealcat",
+        path: "meal",
         match: { title: { $eq: name } }
       });
-    console.log(orders);
     res.json(orders);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -46,8 +38,7 @@ async function searchOrders(req, res) {
 async function getOrder(req, res) {
   try {
     const order = await Order.findById(req.params.id)
-      .populate("mealcat")
-      .populate("mealdog")
+      .populate("meal")
       .populate("user");
     res.json(order);
   } catch (error) {
@@ -58,8 +49,7 @@ async function getOrder(req, res) {
 async function getSubscriptions(req, res) {
   try {
     const orders = await Order.find({ isSubscription: true })
-      .populate("mealcat")
-      .populate("mealdog")
+      .populate("meal")
       .populate("user");
     res.json(orders);
   } catch (error) {
@@ -70,8 +60,7 @@ async function getSubscriptions(req, res) {
 async function getUniqueOrders(req, res) {
   try {
     const orders = await Order.find({ isSubscription: false })
-      .populate("mealcat")
-      .populate("mealdog")
+      .populate("meal")
       .populate("user");
     res.json(orders);
   } catch (error) {
@@ -81,11 +70,9 @@ async function getUniqueOrders(req, res) {
 
 async function getSpecies(req, res) {
   const pet = req.params.pets;
-  console.log(pet);
   try {
     const orders = await Order.find()
-      .populate("mealcat")
-      .populate("mealdog")
+      .populate("meal")
       .populate("user");
     ordersPets = orders.filter(order => {
       return order.meal.species === pet;
@@ -116,7 +103,6 @@ async function createOrder(req, res) {
       const meal = req.body.meal;
       const user = req.body.user;
       const totalPrice = price * quantity;
-      // const date = today;
 
       const newOrder = new Order({
         meal,
@@ -126,9 +112,7 @@ async function createOrder(req, res) {
         frequency,
         isSubscription,
         description
-        // date
       });
-      console.log(searchUser, searchMeal);
       // mettre à jour les stocks
       searchMeal.quantity = searchMeal.quantity - quantity;
       await searchMeal.save();
