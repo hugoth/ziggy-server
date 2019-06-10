@@ -102,7 +102,7 @@ async function calculDailyNeeds(req, res) {
     let dailyNeeds = 0;
     if (species === "chien") {
       dailyNeeds = dogFinalyNeeds;
-    } else {
+    } else if (species === "chat") {
       dailyNeeds = catFinalNeeds;
     }
 
