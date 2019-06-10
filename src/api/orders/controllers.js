@@ -1,6 +1,7 @@
 const Order = require("./model");
 const User = require("../users/model");
-const Meal = require("../meals/model");
+const MealCat = require("../meals/models/modelcat");
+const MealDog = require("../meals/models/modeldog");
 
 let today = new Date();
 const mm = String(today.getDate()).padStart(2, "0");
@@ -12,7 +13,8 @@ today = mm + "/" + dd + "/" + yyyy;
 async function getOrders(req, res) {
   try {
     const orders = await Order.find()
-      .populate("meal")
+      .populate("mealcat")
+      .populate("mealdog")
       .populate("user");
     res.json(orders);
   } catch (error) {
@@ -27,7 +29,11 @@ async function searchOrders(req, res) {
     const orders = await Order.find()
       .populate("user")
       .populate({
-        path: "meal",
+        path: "mealdog",
+        match: { title: { $eq: name } }
+      })
+      .populate({
+        path: "mealcat",
         match: { title: { $eq: name } }
       });
     console.log(orders);
@@ -40,7 +46,8 @@ async function searchOrders(req, res) {
 async function getOrder(req, res) {
   try {
     const order = await Order.findById(req.params.id)
-      .populate("meal")
+      .populate("mealcat")
+      .populate("mealdog")
       .populate("user");
     res.json(order);
   } catch (error) {
@@ -51,7 +58,8 @@ async function getOrder(req, res) {
 async function getSubscriptions(req, res) {
   try {
     const orders = await Order.find({ isSubscription: true })
-      .populate("meal")
+      .populate("mealcat")
+      .populate("mealdog")
       .populate("user");
     res.json(orders);
   } catch (error) {
@@ -62,7 +70,8 @@ async function getSubscriptions(req, res) {
 async function getUniqueOrders(req, res) {
   try {
     const orders = await Order.find({ isSubscription: false })
-      .populate("meal")
+      .populate("mealcat")
+      .populate("mealdog")
       .populate("user");
     res.json(orders);
   } catch (error) {
@@ -75,7 +84,8 @@ async function getSpecies(req, res) {
   console.log(pet);
   try {
     const orders = await Order.find()
-      .populate("meal")
+      .populate("mealcat")
+      .populate("mealdog")
       .populate("user");
     ordersPets = orders.filter(order => {
       return order.meal.species === pet;

@@ -1,7 +1,7 @@
-const Meal = require("./model");
-const fakemeals = require("../db/db.json");
+const MealDog = require("./models/modeldog");
+const MealCat = require("./models/modelcat");
 
-async function createMeal(req, res) {
+async function createMealDog(req, res) {
   try {
     const {
       title,
@@ -14,7 +14,7 @@ async function createMeal(req, res) {
       pricePerBag
     } = req.body.meal;
 
-    const newMeal = new Meal({
+    const newMeal = new MealDog({
       title,
       species,
       quantity,
@@ -24,7 +24,6 @@ async function createMeal(req, res) {
       description,
       pricePerBag
     });
-
     await newMeal.save();
     res.status(200).json({ message: "Meal created", newMeal });
   } catch (error) {
@@ -33,14 +32,53 @@ async function createMeal(req, res) {
   }
 }
 
-async function getMeals(req, res) {
-  // try {
-  //   const meals = await Meal.find();
-  //   res.status(200).json(meals);
-  // } catch (error) {
-  //   res.status(400).json({ error: error.message });
-  // }
-  res.json(fakemeals);
+async function createMealCat(req, res) {
+  try {
+    const {
+      title,
+      species,
+      quantity,
+      weight,
+      caloriesPerBag,
+      ingredients,
+      description,
+      pricePerBag
+    } = req.body.meal;
+
+    const newMeal = new MealCat({
+      title,
+      species,
+      quantity,
+      weight,
+      caloriesPerBag,
+      ingredients,
+      description,
+      pricePerBag
+    });
+    await newMeal.save();
+    res.status(200).json({ message: "Meal created", newMeal });
+  } catch (error) {
+    res.status(402).json({ error: error.message });
+    console.log(error);
+  }
+}
+
+async function getMealsDog(req, res) {
+  try {
+    const meals = await MealDog.find();
+    res.status(200).json(meals);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function getMealsCat(req, res) {
+  try {
+    const meals = await MealCat.find();
+    res.status(200).json(meals);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 }
 
 async function removeMeal(req, res) {
@@ -92,8 +130,10 @@ async function deleteMeal(req, res) {
   }
 }
 
-module.exports.createMeal = createMeal;
-module.exports.getMeals = getMeals;
+module.exports.createMealDog = createMealDog;
+module.exports.createMealCat = createMealCat;
+module.exports.getMealsDog = getMealsDog;
+module.exports.getMealsCat = getMealsCat;
 module.exports.removeMeal = removeMeal;
 module.exports.updateMeal = updateMeal;
 module.exports.deleteMeal = deleteMeal;

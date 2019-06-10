@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 
-const Meal = mongoose.model("Meal", {
+const MealDog = mongoose.model("MealDog", {
   title: String,
   species: String,
   quantity: Number,
   weight: Number,
-  calories: Number,
+  caloriesPerBag: Number,
   ingredients: String,
   description: String,
-  price: Number
+  pricePerBag: Number
 });
 
-module.exports = Meal;
+module.exports = MealDog;

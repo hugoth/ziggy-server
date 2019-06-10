@@ -96,6 +96,13 @@ async function calculDailyNeeds(req, res) {
     const catDailyNeeds =
       catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
+    let dailyNeeds = 0;
+    if (species === "chien") {
+      dailyNeeds = dogDailyNeeds;
+    } else {
+      dailyNeeds = catDailyNeeds;
+    }
+
     const newPet = new Pet({
       name,
       species,
@@ -114,7 +121,8 @@ async function calculDailyNeeds(req, res) {
       appetite,
       eatcandies,
       candytype,
-      owner
+      owner,
+      dailyNeeds
     });
     await newPet.save();
 
