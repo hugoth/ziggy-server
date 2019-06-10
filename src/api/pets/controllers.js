@@ -101,7 +101,7 @@ async function calculDailyNeeds(req, res) {
 
     let dailyNeeds = 0;
     if (species === "chien") {
-      dailyNeeds = dogFinalyNeeds;
+      dailyNeeds = dogFinalNeeds;
     } else if (species === "chat") {
       dailyNeeds = catFinalNeeds;
     }
@@ -127,12 +127,11 @@ async function calculDailyNeeds(req, res) {
       owner,
       dailyNeeds
     });
-    await newPet.save();
+    // await newPet.save();
 
     if (userID) {
       const searchUser = await User.findById(userID);
       if (searchUser) {
-        console.log(searchUser);
         searchUser.pets.push(newPet._id);
         await searchUser.save();
       }
