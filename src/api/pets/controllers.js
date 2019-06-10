@@ -96,11 +96,14 @@ async function calculDailyNeeds(req, res) {
     const catDailyNeeds =
       catTheoreticalNeeds * sterilizedFactor * physiologyFactor;
 
+    const catFinalNeeds = catDailyNeeds.toFixed(2);
+    const dogFinalNeeds = dogDailyNeeds.toFixed(2);
+
     let dailyNeeds = 0;
     if (species === "chien") {
-      dailyNeeds = dogDailyNeeds;
+      dailyNeeds = dogFinalyNeeds;
     } else {
-      dailyNeeds = catDailyNeeds;
+      dailyNeeds = catFinalNeeds;
     }
 
     const newPet = new Pet({
@@ -134,9 +137,6 @@ async function calculDailyNeeds(req, res) {
         await searchUser.save();
       }
     }
-
-    const catFinalNeeds = catDailyNeeds.toFixed(2);
-    const dogFinalNeeds = dogDailyNeeds.toFixed(2);
 
     if (species === "chien") {
       res.json({ dogFinalNeeds, newPet });
