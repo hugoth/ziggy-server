@@ -95,14 +95,14 @@ async function createOrder(req, res) {
     } else {
       const {
         quantity,
-        price,
-        description,
+
         frequency,
-        isSubscription
+        isSubscription,
+        meal,
+        user
       } = req.body;
-      const meal = req.body.meal;
-      const user = req.body.user;
-      const totalPrice = price * quantity;
+
+      const totalPrice = searchMeal.price * quantity;
 
       const newOrder = new Order({
         meal,
@@ -110,8 +110,7 @@ async function createOrder(req, res) {
         quantity,
         totalPrice,
         frequency,
-        isSubscription,
-        description
+        isSubscription
       });
       // mettre à jour les stocks
       searchMeal.quantity = searchMeal.quantity - quantity;

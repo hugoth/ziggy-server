@@ -23,7 +23,7 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  description: String,
+
   date: { type: Date, default: Date.now() }
 });
 
