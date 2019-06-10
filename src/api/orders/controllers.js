@@ -85,24 +85,17 @@ async function getSpecies(req, res) {
 }
 
 async function createOrder(req, res) {
+  console.log(req.body.user);
+
   try {
     const searchUser = await User.findById(req.body.user);
     const searchMeal = await Meal.findById(req.body.meal);
     if (!searchUser) {
       res.status(401).json("Login as user needed");
-    } else if (searchMeal.quantity < req.body.quantity) {
-      res.status(402).json("Out of Stock");
     } else {
-      const {
-        quantity,
+      const { quantity, frequency, isSubscription, meal, user } = req.body;
 
-        frequency,
-        isSubscription,
-        meal,
-        user
-      } = req.body;
-
-      const totalPrice = searchMeal.price * quantity;
+      const totalPrice = searchMeal.pricePerBag * quantity;
 
       const newOrder = new Order({
         meal,
