@@ -93,7 +93,8 @@ async function logIn(req, res) {
     mail: searchUser.mail,
     token: searchUser.token,
     pets: searchUser.pets,
-    id: searchUser._id
+    id: searchUser._id,
+    orders: searchUser.orders
   };
   const password = req.body.user.password;
 

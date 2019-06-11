@@ -184,8 +184,7 @@ async function updatePets(req, res) {
       allergic,
       appetite,
       eatcandies,
-      candytype,
-      owner
+      candytype
     } = req.body.pet;
 
     let fitnessFactor = 0;
@@ -286,7 +285,6 @@ async function updatePets(req, res) {
       appetite,
       eatcandies,
       candytype,
-      owner,
       dailyNeeds
     };
     await searchPet.save();
