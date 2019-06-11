@@ -187,9 +187,7 @@ async function updatePets(req, res) {
       allergic,
       appetite,
       eatcandies,
-      candytype,
-      owner,
-      dailyNeeds
+      candytype
     } = req.body.pet;
 
     let fitnessFactor = 0;
@@ -271,26 +269,24 @@ async function updatePets(req, res) {
       dailyNeeds = catFinalNeeds;
     }
 
-    searchPet = {
-      name,
-      species,
-      breedfactor,
-      breed,
-      age,
-      weight,
-      sterilized,
-      gender,
-      physiology,
-      fitness,
-      healthcare,
-      foodsupply,
-      allergic,
-      appetite,
-      eatcandies,
-      candytype,
-      owner,
-      dailyNeeds
-    };
+    searchPet.name = name;
+    searchPet.species = species;
+    searchPet.breedfactor = breedfactor;
+    searchPet.breed = breed;
+    searchPet.gender = gender;
+    searchPet.age = age;
+    searchPet.weight = weight;
+    searchPet.sterilized = sterilized;
+    searchPet.fitness = fitness;
+    searchPet.physiology = physiology;
+    searchPet.healthcare = healthcare;
+    searchPet.allergic = allergic;
+    searchPet.appetite = appetite;
+    searchPet.candytype = candytype;
+    searchPet.dailyNeeds = dailyNeeds;
+    searchPet.eatcandies = eatcandies;
+    searchPet.foodsupply = foodsupply;
+
     await searchPet.save();
 
     if (species === "chien") {
