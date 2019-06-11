@@ -85,8 +85,6 @@ async function getSpecies(req, res) {
 }
 
 async function createOrder(req, res) {
-  console.log(req.body.user);
-
   try {
     const searchUser = await User.findById(req.body.user);
     const searchMeal = await Meal.findById(req.body.meal);

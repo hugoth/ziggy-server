@@ -167,6 +167,9 @@ async function getPets(req, res) {
 async function updatePets(req, res) {
   try {
     const searchPet = await Pet.findById(req.body.pet.id);
+    if (!searchPet) {
+      res.status(402).json("pet don't exist");
+    }
     const {
       name,
       species,
