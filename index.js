@@ -30,6 +30,9 @@ app.use(meals);
 const orders = require("./src/api/orders/routes");
 app.use(orders);
 
+const stripe = require("./src/api/stripe/routes");
+app.use(stripe);
+
 app.listen(process.env.PORT || 3001, () => {
   console.log("Server started");
 });
