@@ -14,7 +14,7 @@ async function payment(req, res) {
     if (status === "succeeded") {
       console.log("yeah");
     }
-    // console.log(status);
+
     res.json({ status });
   } catch (err) {
     res.status(500).end();
