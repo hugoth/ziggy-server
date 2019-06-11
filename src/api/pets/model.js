@@ -11,7 +11,6 @@ const Pet = mongoose.model("Pet", {
   age: Number,
   weight: Number,
   sterilized: Boolean,
-  purebred: Boolean,
   gender: String,
   physiology: String,
   fitness: String,

@@ -170,6 +170,7 @@ async function updatePets(req, res) {
     if (!searchPet) {
       res.status(402).json("pet don't exist");
     }
+    console.log(searchPet);
     const {
       name,
       species,
@@ -178,7 +179,6 @@ async function updatePets(req, res) {
       age,
       weight,
       sterilized,
-      purebreed,
       gender,
       physiology,
       fitness,
@@ -187,7 +187,9 @@ async function updatePets(req, res) {
       allergic,
       appetite,
       eatcandies,
-      candytype
+      candytype,
+      owner,
+      dailyNeeds
     } = req.body.pet;
 
     let fitnessFactor = 0;
@@ -263,7 +265,6 @@ async function updatePets(req, res) {
     const catFinalNeeds = catDailyNeeds.toFixed(2);
     const dogFinalNeeds = dogDailyNeeds.toFixed(2);
 
-    let dailyNeeds = 0;
     if (species === "chien") {
       dailyNeeds = dogFinalNeeds;
     } else if (species === "chat") {
@@ -278,7 +279,6 @@ async function updatePets(req, res) {
       age,
       weight,
       sterilized,
-      purebreed,
       gender,
       physiology,
       fitness,
@@ -288,6 +288,7 @@ async function updatePets(req, res) {
       appetite,
       eatcandies,
       candytype,
+      owner,
       dailyNeeds
     };
     await searchPet.save();
