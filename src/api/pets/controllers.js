@@ -127,7 +127,7 @@ async function calculDailyNeeds(req, res) {
       owner,
       dailyNeeds
     });
-    // await newPet.save();
+    await newPet.save();
 
     if (userID) {
       const searchUser = await User.findById(userID);
