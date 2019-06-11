@@ -270,7 +270,7 @@ async function updatePets(req, res) {
       dailyNeeds = catFinalNeeds;
     }
 
-    const searchPet = {
+    searchPet = {
       name,
       species,
       breedfactor,
