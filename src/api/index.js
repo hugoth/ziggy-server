@@ -5,6 +5,6 @@ router.use("/admins", require("./admins/routes"));
 router.use("/users", require("./users/routes"));
 router.use("/pets", require("./pets/routes"));
 router.use("/meals", require("./meals/routes"));
-router.use("/payment", require("./stripe/routes"));
+router.use("/createcustomer", require("./stripe/routes"));
 
 module.exports = router;
