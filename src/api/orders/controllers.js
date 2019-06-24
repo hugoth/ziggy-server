@@ -84,16 +84,25 @@ async function getSpecies(req, res) {
   }
 }
 
-async function createOrder(req, res) {
+async function createSubscription(req, res) {
+  console.log("user order db :", req.body.frequency);
+  const meal = req.body.order.plan.planDB;
+  const user = req.body.user.id;
+  const searchUser = await User.findById(user);
+  const searchMeal = await Meal.findById(meal);
+  console.log(searchMeal);
+
   try {
-    const searchUser = await User.findById(req.body.user);
-    const searchMeal = await Meal.findById(req.body.meal);
+    const searchUser = await User.findById(user);
+    const searchMeal = await Meal.findById(meal);
     if (!searchUser) {
       res.status(401).json("Login as user needed");
     } else {
-      const { quantity, frequency, isSubscription, meal, user } = req.body;
-
-      const totalPrice = searchMeal.pricePerBag * quantity;
+      // const { quantity, frequency, isSubscription, meal, user } = req.body;
+      const totalPrice = req.body.order.price;
+      const quantity = req.body.order.quantity;
+      const isSubscription = req.body.isSubscription;
+      const frequency = req.body.frequency;
 
       const newOrder = new Order({
         meal,
@@ -115,6 +124,8 @@ async function createOrder(req, res) {
       res.status(200).json({ message: "order completed", newOrder });
     }
   } catch (error) {
+    console.log(error.message);
+
     res.status(400).json({ error: error.message });
   }
 }
@@ -122,7 +133,7 @@ async function createOrder(req, res) {
 module.exports.getOrders = getOrders;
 module.exports.getOrder = getOrder;
 module.exports.getSubscriptions = getSubscriptions;
-module.exports.createOrder = createOrder;
+module.exports.createSubscription = createSubscription;
 module.exports.getUniqueOrders = getUniqueOrders;
 module.exports.getSpecies = getSpecies;
 module.exports.searchOrders = searchOrders;

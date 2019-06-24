@@ -1,5 +1,8 @@
 const stripe = require("stripe")("sk_test_fk5EQSTMjzhrXWjcNtTlHIgi00EA5vnuVZ");
 const Meal = require("../meals/model");
+const { createOrderDB } = require("../orders/routes");
+const Order = require("../orders/model");
+const User = require("../users/model");
 
 // Create Stock
 
@@ -29,11 +32,6 @@ async function createStock(req, res) {
   }
 }
 
-// Create Card
-
-async function createCard(req, res) {
-  console.log(req.body);
-}
 // Create Customer
 
 async function createCustomer(req, res) {
@@ -68,19 +66,16 @@ async function createCustomer(req, res) {
               customer: customer.id,
               items: [
                 {
-                  plan: req.body.order.plan,
+                  plan: req.body.order.plan.planStripe,
                   quantity: req.body.order.quantity
                 }
               ]
             },
             function(err, subscription) {
               if (subscription) {
-                console.log(subscription);
-
                 res.status(200).json(subscription);
               } else {
                 console.log(err);
-
                 res.json(err);
               }
             }
@@ -99,31 +94,6 @@ async function createCustomer(req, res) {
 // Payment / order
 
 // Abonnement
-
-async function CreateSubscription(customer, plan, res) {
-  console.log("subscription function activate");
-  try {
-    await stripe.subscriptions.create(
-      {
-        customer: customer.id,
-        items: [
-          {
-            plan: plan
-          }
-        ]
-      },
-      function(err, subscription) {
-        if (subscription) {
-          res.status(200).json(subscription);
-        } else {
-          res.json(err);
-        }
-      }
-    );
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
 
 //Create Product
 
@@ -202,9 +172,7 @@ async function createOrder(req, res) {
   }
 }
 
-module.exports.createCard = createCard;
 module.exports.createCustomer = createCustomer;
 module.exports.createStock = createStock;
 module.exports.createProduct = createProduct;
 module.exports.createOrder = createOrder;
-module.exports.CreateSubscription = CreateSubscription;
