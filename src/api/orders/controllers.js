@@ -85,12 +85,8 @@ async function getSpecies(req, res) {
 }
 
 async function createSubscription(req, res) {
-  console.log("user order db :", req.body.frequency);
   const meal = req.body.order.plan.planDB;
   const user = req.body.user.id;
-  const searchUser = await User.findById(user);
-  const searchMeal = await Meal.findById(meal);
-  console.log(searchMeal);
 
   try {
     const searchUser = await User.findById(user);
@@ -130,6 +126,44 @@ async function createSubscription(req, res) {
   }
 }
 
+async function createSingleOrder(req, res) {
+  const meals = req.body.meals;
+  const user = req.body.user.id;
+  // console.log(meal, user);
+  console.log(req.body);
+
+  try {
+    const searchUser = await User.findById(user);
+
+    for (i = 0; i < meals.length; i++) {
+      const searchMeal = await Meal.findById(meal._id);
+      const quantity = meal.quantity;
+      const totalPrice = meal.quantity * meal.pricePerBag;
+
+      const newOrder = new Order({
+        meal: meal._id,
+        user,
+        quantity,
+        totalPrice,
+        isSubscription: false
+      });
+      // asyncForEach();
+      searchMeal.quantity = searchMeal.quantity - quantity;
+      await searchMeal.save();
+      await newOrder.save();
+      if (searchUser) {
+        searchUser.orders.push(newOrder._id);
+        await searchUser.save();
+      }
+    }
+    // async function asyncForEach(meals, callback) {}
+    console.log(newOrder);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports.createSingleOrder = createSingleOrder;
 module.exports.getOrders = getOrders;
 module.exports.getOrder = getOrder;
 module.exports.getSubscriptions = getSubscriptions;

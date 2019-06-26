@@ -1,40 +1,13 @@
 const stripe = require("stripe")("sk_test_fk5EQSTMjzhrXWjcNtTlHIgi00EA5vnuVZ");
 const Meal = require("../meals/model");
-const { createOrderDB } = require("../orders/routes");
 const Order = require("../orders/model");
 const User = require("../users/model");
 
 // Create Stock
 
-async function createStock(req, res) {
-  console.log("yo");
-  const { product } = req.body;
+//  Abonnement
 
-  try {
-    await stripe.skus.create(
-      {
-        product: product.id,
-        attributes: { species: product.species },
-        price: product.price,
-        currency: "eur",
-        inventory: { type: "infinite" }
-      },
-      function(err, sku) {
-        if (err) {
-          res.status(400).json(err);
-        } else if (sku) {
-          res.json(sku);
-        }
-      }
-    );
-  } catch (err) {
-    res.json({ err: err.message });
-  }
-}
-
-// Create Customer
-
-async function createCustomer(req, res) {
+async function createSubscription(req, res) {
   const userName = req.body.user.firstName + " " + req.body.user.lastName;
   const description = "Création d'un client : " + userName;
   try {
@@ -91,72 +64,76 @@ async function createCustomer(req, res) {
   }
 }
 
-// Payment / order
-
-// Abonnement
-
-//Create Product
-
-async function createProduct(req, res) {
-  try {
-    await stripe.products.create(
-      {
-        name: "Boeuf",
-        type: "good",
-        caption: "Repas complet 100% naturel pour chien adulte.",
-        description:
-          "Bœuf frais 50% (paleron de bœuf, cœur de bœuf, foie de bœuf), Patate Douce, Carottes, Brocolis, Pomme, Huile de Colza, Sel, Thym, Romarin – Vitamines et Minéraux.",
-
-        attributes: ["chien", "360"]
-      },
-      function(err, product) {
-        res.json({ err, product });
-      }
-    );
-  } catch (error) {
-    res.json({ error: message.error });
-  }
-}
+// Payment
 
 async function createOrder(req, res) {
-  const { user, meal } = req.body;
+  const user = req.body.user;
+  let Items = [];
   const userName = user.firstName + " " + user.lastName;
+  const order = req.body.order;
+  order.map(order => {
+    Items.push({
+      quantity: order.quantity,
+      type: "sku",
+      parent: order.sku
+    });
+  });
 
   try {
-    await stripe.orders.create(
+    await stripe.customers.create(
       {
-        currency: "eur",
-        items: [
-          {
-            type: "sku",
-            parent: req.body.sku,
-            quantity: 2
-          }
-        ],
-        shipping: {
-          name: userName,
-          address: {
-            line1: user.address,
-            city: user.city,
-            country: user.country,
-            postal_code: user.zipcode
-          }
+        address: {
+          line1: req.body.user.address,
+          city: req.body.user.city,
+          country: "France",
+          postal_code: req.body.user.zip
         },
-        email: user.email
+
+        shipping: {
+          address: {
+            line1: req.body.user.address,
+            city: req.body.user.city,
+            postal_code: req.body.user.zip
+          },
+          name: userName
+        },
+        email: req.body.user.email,
+        source: req.body.token.id
       },
-      async function(err, order) {
-        if (order) {
-          await stripe.order.pay(
-            `${order.id}`,
+      async function(err, customer) {
+        if (customer) {
+          await stripe.orders.create(
             {
-              amount: req.body.amount,
               currency: "eur",
-              source: "tok_visa", // obtained with Stripe.js
-              description: `Charge ${userName} `
+              items: Items,
+              shipping: {
+                name: userName,
+                address: {
+                  line1: user.address,
+                  city: user.city,
+                  country: user.country,
+                  postal_code: user.zip
+                }
+              },
+              email: user.email
             },
-            function(err, charge) {
-              if (charge) {
-                res.json(charge);
+            async function(err, order) {
+              if (order) {
+                await stripe.orders.pay(
+                  order.id,
+                  {
+                    amount: req.body.amount,
+
+                    source: "tok_visa" // obtained with Stripe.js
+                  },
+                  function(err, charge) {
+                    if (charge) {
+                      res.json(charge);
+                    } else {
+                      res.json(err);
+                    }
+                  }
+                );
               } else {
                 res.json(err);
               }
@@ -168,11 +145,37 @@ async function createOrder(req, res) {
       }
     );
   } catch (err) {
+    console.log(err);
     res.status(500).json({ err: err.message });
   }
 }
 
-module.exports.createCustomer = createCustomer;
-module.exports.createStock = createStock;
-module.exports.createProduct = createProduct;
+module.exports.createSubscription = createSubscription;
 module.exports.createOrder = createOrder;
+
+// Create Stock
+// async function createStock(req, res) {
+//   console.log("yo");
+//   const { product } = req.body;
+
+//   try {
+//     await stripe.skus.create(
+//       {
+//         product: product.id,
+//         attributes: { species: product.species },
+//         price: product.price,
+//         currency: "eur",
+//         inventory: { type: "infinite" }
+//       },
+//       function(err, sku) {
+//         if (err) {
+//           res.status(400).json(err);
+//         } else if (sku) {
+//           res.json(sku);
+//         }
+//       }
+//     );
+//   } catch (err) {
+//     res.json({ err: err.message });
+//   }
+// }
