@@ -127,6 +127,30 @@ async function createSubscription(req, res) {
   }
 }
 
+// async function updateSubscription(req, res) {
+//   const subscriptionId = req.body.id;
+
+//   try {
+//     if (subscriptionId) {
+//       const searchSubscription = await updateSubscriptionDB(subscriptionId);
+//       res.json(searchSubscription);
+//     }
+//   } catch (err) {
+//     res.status(400).json({ err: err.message });
+//   }
+// }
+
+async function updateSubscriptionDB(subscriptionId) {
+  try {
+    const searchSubscription = await Order.findById(subscriptionId);
+    searchSubscription.isActive = !searchSubscription.isActive;
+    searchSubscription.save();
+    return searchSubscription;
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+}
+
 async function createSingleOrder(req, res) {
   const meals = req.body.meals;
   const user = req.body.user.id;
@@ -170,6 +194,8 @@ module.exports.getOrders = getOrders;
 module.exports.getOrder = getOrder;
 module.exports.getSubscriptions = getSubscriptions;
 module.exports.createSubscription = createSubscription;
+// module.exports.updateSubscription = updateSubscription;
+module.exports.updateSubscriptionDB = updateSubscriptionDB;
 module.exports.getUniqueOrders = getUniqueOrders;
 module.exports.getSpecies = getSpecies;
 module.exports.searchOrders = searchOrders;

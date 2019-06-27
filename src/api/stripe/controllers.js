@@ -3,6 +3,8 @@ const Meal = require("../meals/model");
 const Order = require("../orders/model");
 const User = require("../users/model");
 
+const ordersController = require("../orders/controllers");
+
 // Create Stock
 
 //  Abonnement
@@ -66,20 +68,34 @@ async function createSubscription(req, res) {
   }
 }
 
-async function updateSubscription(req, res) {
+function updateSubscription(req, res) {
   try {
-    const subscription = req.body.subscriptionID;
-    await stripe.subscriptions.update(
-      subscription,
-      { cancel_at_period_end: true },
-      function(err, subscription) {
+    const subscriptionIDStripe = req.body.subscriptionID;
+    const subscriptionIDDB = req.body.subscription.id;
+    stripe.subscriptions
+      .update(subscriptionIDStripe, { cancel_at_period_end: true })
+      .then(async subscription => {
         if (subscription) {
-          res.status(200).json(subscription);
-        } else {
-          res.status(400).json(err);
+          const updatedSubscription = await ordersController.updateSubscriptionDB(
+            subscriptionIDDB
+          );
+          // call update subscription controller
+          res.status(200).json(updatedSubscription);
         }
-      }
-    );
+      })
+      .catch(err => res.status(400).json(err));
+
+    // stripe.subscriptions.update(
+    //   subscription,
+    //   { cancel_at_period_end: true },
+    //   function(err, subscription) {
+    //     if (subscription) {
+    //       res.status(200).json(subscription);
+    //     } else {
+    //       res.status(400).json(err);
+    //     }
+    //   }
+    // );
   } catch (err) {
     res.json({ err: err.message });
   }
