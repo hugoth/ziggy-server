@@ -24,7 +24,8 @@ const orderSchema = new mongoose.Schema({
     required: true
   },
   subscriptionID: {
-    type: String
+    type: String,
+    required: true
   },
 
   date: { type: Date, default: Date.now() }

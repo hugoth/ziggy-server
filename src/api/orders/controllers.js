@@ -98,6 +98,7 @@ async function createSubscription(req, res) {
       const quantity = req.body.order.quantity;
       const isSubscription = req.body.isSubscription;
       const frequency = req.body.frequency;
+      const subscriptionID = req.body.subscriptionID;
 
       const newOrder = new Order({
         meal,
@@ -105,7 +106,8 @@ async function createSubscription(req, res) {
         quantity,
         totalPrice,
         frequency,
-        isSubscription
+        isSubscription,
+        subscriptionID
       });
       // mettre à jour les stocks
       searchMeal.quantity = searchMeal.quantity - quantity;
