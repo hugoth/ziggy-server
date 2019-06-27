@@ -46,6 +46,8 @@ async function createSubscription(req, res) {
             },
             function(err, subscription) {
               if (subscription) {
+                console.log("yo");
+
                 res.status(200).json(subscription);
               } else {
                 console.log(err);
@@ -61,6 +63,25 @@ async function createSubscription(req, res) {
   } catch (err) {
     console.log({ err: err.message });
     res.status(500).json({ err: err.message });
+  }
+}
+
+async function updateSubscription(req, res) {
+  try {
+    const subscription = req.body.subscriptionID;
+    await stripe.subscriptions.update(
+      subscription,
+      { cancel_at_period_end: true },
+      function(err, subscription) {
+        if (subscription) {
+          res.status(200).json(subscription);
+        } else {
+          res.status(400).json(err);
+        }
+      }
+    );
+  } catch (err) {
+    res.json({ err: err.message });
   }
 }
 
@@ -151,6 +172,7 @@ async function createOrder(req, res) {
 }
 
 module.exports.createSubscription = createSubscription;
+module.exports.updateSubscription = updateSubscription;
 module.exports.createOrder = createOrder;
 
 // Create Stock

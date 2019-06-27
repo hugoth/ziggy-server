@@ -94,7 +94,6 @@ async function createSubscription(req, res) {
     if (!searchUser) {
       res.status(401).json("Login as user needed");
     } else {
-      // const { quantity, frequency, isSubscription, meal, user } = req.body;
       const totalPrice = req.body.order.price;
       const quantity = req.body.order.quantity;
       const isSubscription = req.body.isSubscription;
@@ -129,25 +128,26 @@ async function createSubscription(req, res) {
 async function createSingleOrder(req, res) {
   const meals = req.body.meals;
   const user = req.body.user.id;
-  // console.log(meal, user);
-  console.log(req.body);
+  console.log(meals);
 
   try {
     const searchUser = await User.findById(user);
 
     for (i = 0; i < meals.length; i++) {
-      const searchMeal = await Meal.findById(meal._id);
-      const quantity = meal.quantity;
-      const totalPrice = meal.quantity * meal.pricePerBag;
+      const searchMeal = await Meal.findById(meals[i]._id);
+      console.log(searchMeal);
+
+      const quantity = searchMeal.quantity;
+      const totalPrice = searchMeal.quantity * searchMeal.pricePerBag;
 
       const newOrder = new Order({
-        meal: meal._id,
+        meal: searchMeal._id,
         user,
         quantity,
         totalPrice,
         isSubscription: false
       });
-      // asyncForEach();
+
       searchMeal.quantity = searchMeal.quantity - quantity;
       await searchMeal.save();
       await newOrder.save();
@@ -156,7 +156,7 @@ async function createSingleOrder(req, res) {
         await searchUser.save();
       }
     }
-    // async function asyncForEach(meals, callback) {}
+
     console.log(newOrder);
   } catch (error) {
     console.log(error.message);
