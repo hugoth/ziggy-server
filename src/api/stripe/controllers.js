@@ -48,8 +48,6 @@ async function createSubscription(req, res) {
             },
             function(err, subscription) {
               if (subscription) {
-                console.log("yo");
-
                 res.status(200).json(subscription);
               } else {
                 console.log(err);

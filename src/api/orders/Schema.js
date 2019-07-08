@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  meal: { type: mongoose.Schema.Types.ObjectId, ref: "Meal", required: true },
+  meal: [{ type: mongoose.Schema.Types.ObjectId, ref: "Meal", required: true }],
 
   isSubscription: {
     type: Boolean,
@@ -14,18 +14,13 @@ const orderSchema = new mongoose.Schema({
   },
   frequency: Number,
 
-  quantity: {
-    type: Number,
-    required: true
-  },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   totalPrice: {
     type: Number,
     required: true
   },
   subscriptionID: {
-    type: String,
-    required: true
+    type: String
   },
 
   date: { type: Date, default: Date.now() }

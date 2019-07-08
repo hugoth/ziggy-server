@@ -107,7 +107,7 @@ async function logIn(req, res) {
       res.status(401).json({ message: "password incorrect" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(416).json({ error: error.message });
   }
 }
 
