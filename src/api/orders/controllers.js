@@ -159,14 +159,16 @@ async function createSingleOrder(req, res) {
     const searchUser = await User.findById(user);
     const mealsDb = [];
     let totalPrice = 0;
+    let quantity = 0;
     for (i = 0; i < meals.length; i++) {
       mealsDb.push(meals[i]._id);
       totalPrice = totalPrice + meals[i].quantity * meals[i].PricePerBag;
+      quantity = quantity + meals[i].quantity;
     }
     const newOrder = new Order({
       meal: mealsDb,
       user,
-
+      quantity,
       totalPrice,
       isSubscription: false
     });
