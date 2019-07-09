@@ -50,7 +50,6 @@ async function createSubscription(req, res) {
               if (subscription) {
                 res.status(200).json(subscription);
               } else {
-                console.log(err);
                 res.json(err);
               }
             }
@@ -102,10 +101,12 @@ function updateSubscription(req, res) {
 // Payment
 
 async function createOrder(req, res) {
+  console.log(req.body);
+
   const user = req.body.user;
+  const order = req.body.order;
   let Items = [];
   const userName = user.firstName + " " + user.lastName;
-  const order = req.body.order;
   order.map(order => {
     Items.push({
       quantity: order.quantity,
@@ -154,21 +155,22 @@ async function createOrder(req, res) {
             },
             async function(err, order) {
               if (order) {
-                await stripe.orders.pay(
-                  order.id,
-                  {
+                await stripe.orders
+                  .pay(order.id, {
                     amount: req.body.amount,
-
                     source: "tok_visa" // obtained with Stripe.js
-                  },
-                  function(err, charge) {
+                  })
+                  .then(async charge => {
                     if (charge) {
-                      res.json(charge);
+                      const createOrder = await ordersController.createSingleOrder(
+                        user,
+                        order
+                      );
+                      console.log(createOrder);
                     } else {
                       res.json(err);
                     }
-                  }
-                );
+                  });
               } else {
                 res.json(err);
               }
@@ -188,30 +190,3 @@ async function createOrder(req, res) {
 module.exports.createSubscription = createSubscription;
 module.exports.updateSubscription = updateSubscription;
 module.exports.createOrder = createOrder;
-
-// Create Stock
-// async function createStock(req, res) {
-//   console.log("yo");
-//   const { product } = req.body;
-
-//   try {
-//     await stripe.skus.create(
-//       {
-//         product: product.id,
-//         attributes: { species: product.species },
-//         price: product.price,
-//         currency: "eur",
-//         inventory: { type: "infinite" }
-//       },
-//       function(err, sku) {
-//         if (err) {
-//           res.status(400).json(err);
-//         } else if (sku) {
-//           res.json(sku);
-//         }
-//       }
-//     );
-//   } catch (err) {
-//     res.json({ err: err.message });
-//   }
-// }

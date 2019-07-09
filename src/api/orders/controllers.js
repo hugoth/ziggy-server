@@ -151,12 +151,14 @@ async function updateSubscriptionDB(subscriptionId) {
   }
 }
 
-async function createSingleOrder(req, res) {
-  const meals = req.body.meals;
-  const user = req.body.user.id;
+async function createSingleOrder(user, order) {
+  const meals = order;
+  const userId = user.id;
 
   try {
-    const searchUser = await User.findById(user);
+    const searchUser = await User.findById(userId);
+    console.log(searchUser);
+
     const mealsDb = [];
     let totalPrice = 0;
     let quantity = 0;
@@ -167,7 +169,7 @@ async function createSingleOrder(req, res) {
     }
     const newOrder = new Order({
       meal: mealsDb,
-      user,
+      userId,
       quantity,
       totalPrice,
       isSubscription: false
