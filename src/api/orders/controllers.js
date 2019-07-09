@@ -157,7 +157,7 @@ async function createSingleOrder(user, order) {
 
   try {
     const searchUser = await User.findById(userId);
-    console.log(searchUser);
+    console.log("searchuser :", searchUser);
 
     const mealsDb = [];
     let totalPrice = 0;
@@ -178,7 +178,7 @@ async function createSingleOrder(user, order) {
     await newOrder.save();
     searchUser.orders.push(newOrder._id);
     await searchUser.save();
-    console.log(newOrder);
+    console.log("new order :", newOrder);
   } catch (error) {
     console.log(error.message);
   }

@@ -102,7 +102,6 @@ function updateSubscription(req, res) {
 
 async function createOrder(req, res) {
   console.log(req.body);
-
   const user = req.body.user;
   const order = req.body.order;
   let Items = [];
@@ -166,7 +165,8 @@ async function createOrder(req, res) {
                         user,
                         order
                       );
-                      console.log(createOrder);
+
+                      res.status(200).json(createOrder);
                     } else {
                       res.json(err);
                     }
