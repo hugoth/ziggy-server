@@ -154,6 +154,8 @@ async function updateSubscriptionDB(subscriptionId) {
 }
 
 async function createSingleOrder(user, order) {
+  console.log(user, order);
+
   const meals = order;
   const userId = user.id;
 
