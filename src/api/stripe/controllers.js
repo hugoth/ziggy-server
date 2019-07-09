@@ -10,6 +10,8 @@ const ordersController = require("../orders/controllers");
 //  Abonnement
 
 async function createSubscription(req, res) {
+  console.log(req.body);
+
   const userName = req.body.user.firstName + " " + req.body.user.lastName;
   const description = "Création d'un client : " + userName;
   try {
@@ -165,7 +167,6 @@ async function createOrder(req, res) {
                         user,
                         order
                       );
-
                       res.status(200).json(createOrder);
                     } else {
                       res.json(err);

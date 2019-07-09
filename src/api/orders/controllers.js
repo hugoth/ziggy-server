@@ -85,6 +85,8 @@ async function getSpecies(req, res) {
 }
 
 async function createSubscription(req, res) {
+  console.log(req.body);
+
   const meal = req.body.order.plan.planDB;
   const user = req.body.user.id;
 
@@ -110,8 +112,8 @@ async function createSubscription(req, res) {
         subscriptionID
       });
       // mettre à jour les stocks
-      searchMeal.quantity = searchMeal.quantity - quantity;
-      await searchMeal.save();
+      // searchMeal.quantity = searchMeal.quantity - quantity;
+      // await searchMeal.save();
 
       await newOrder.save();
       // Sauvegarder l'order dans l'user (après le save de NewOrder pour récupérer l'ID)
@@ -178,7 +180,7 @@ async function createSingleOrder(user, order) {
     await newOrder.save();
     searchUser.orders.push(newOrder._id);
     await searchUser.save();
-    console.log("new order :", newOrder);
+    return newOrder;
   } catch (error) {
     console.log(error.message);
   }
