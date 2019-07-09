@@ -103,9 +103,11 @@ function updateSubscription(req, res) {
 // Payment
 
 async function createOrder(req, res) {
-  console.log(req.body);
   const user = req.body.user;
   const order = req.body.order;
+
+  // 2 order différents, l'un recu par la req, l'autre créer par stripe donc la function singleorder ne recoit pas les id meals de la db
+
   let Items = [];
   const userName = user.firstName + " " + user.lastName;
   order.map(order => {

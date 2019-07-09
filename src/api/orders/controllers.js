@@ -154,32 +154,36 @@ async function updateSubscriptionDB(subscriptionId) {
 }
 
 async function createSingleOrder(user, order) {
-  console.log(user, order);
+  // console.log("Object received with singleorder :", user, order);
 
   const meals = order;
   const userId = user.id;
+  console.log(meals);
 
   try {
     const searchUser = await User.findById(userId);
-    console.log("searchuser :", searchUser);
+    // console.log("searchuser :", searchUser);
 
     const mealsDb = [];
-    let totalPrice = 0;
-    let quantity = 0;
+    let totalPrice = meals.amount;
     for (i = 0; i < meals.length; i++) {
       mealsDb.push(meals[i]._id);
-      totalPrice = totalPrice + meals[i].quantity * meals[i].PricePerBag;
-      quantity = quantity + meals[i].quantity;
+      // totalPrice = totalPrice + meals[i].amount * meals[i].PricePerBag;
+      // quantity = quantity + meals[i].quantity;
     }
+    // console.log("totalPrice :", totalPrice);
+    // console.log("meals :", meals);
+
     const newOrder = new Order({
       meal: mealsDb,
       userId,
-      quantity,
       totalPrice,
       isSubscription: false
     });
 
     await newOrder.save();
+    // console.log(newOrder);
+
     searchUser.orders.push(newOrder._id);
     await searchUser.save();
     return newOrder;
